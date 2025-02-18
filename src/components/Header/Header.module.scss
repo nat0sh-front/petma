@@ -1,0 +1,70 @@
+@use '../../App.scss' as *;
+
+.header {
+    background-color: $white;
+    display: flex;
+    justify-content: end;
+    padding: 10px 30px;
+    border-bottom: 1px solid $grey;
+    
+    .nav {
+        display: flex;
+        
+        .navList {
+            display: flex;
+            gap: 30px;
+
+            .navButtons {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+
+                .navButton {
+                    border: none;
+                    background-color: $light-grey;
+                    border-radius: 50%;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 10px;
+
+                    .navIcon {
+                        color: $text-color;
+                        width: 15px;
+                        height: 15px;
+                    }
+                }
+            }
+
+            .dropdown {
+                display: flex;
+                gap: 10px;
+
+                .dropdownButton {
+                    border: none;
+                    background-color: transparent;
+                    color: inherit;
+                    font-size: 1rem;
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+
+                    .avatar {
+                        width: 35px;
+                        height: 35px;
+                    }
+
+                    .dropdownIcon {
+                        color: $text-color;
+                        width: 15px;
+                        height: 15px;
+                    }
+                }
+            }
+        }
+    }
+}

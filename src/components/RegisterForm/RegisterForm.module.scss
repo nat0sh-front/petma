@@ -1,0 +1,76 @@
+@use "../../App.scss" as *;
+
+.registerForm {
+    width: 350px;
+    background-color: $white;
+    border-radius: 20px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    padding: 60px 20px 30px;
+    justify-content: space-between;
+    z-index: 2;
+
+    .logo {
+        width: 130px;
+        align-self: center;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 20px;
+        gap: 20px;
+
+        .inputWrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            .label {
+                font-weight: normal;
+            }
+        
+            .input {
+                border: none;
+                background-color: $light-grey;
+                border-radius: 8px;
+                padding: 12px 8px;
+                font-size: inherit;
+                font-family: inherit;
+            }
+        }
+    
+        .button {
+            border: none;
+            border-radius: 20px;
+            background-color: $primary-color;
+            font-size: inherit;
+            font-family: inherit;
+            font-weight: 500;
+            margin-top: 10px;
+            padding: 20px;
+        }
+    }
+
+    hr {
+        height: 1px;
+        width: 100%;
+    }
+
+    .registerText {
+        text-align: center;
+        font-size: 16px;
+
+        .link {
+            color: $primary-color;
+            text-decoration: none;
+    
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    
+}

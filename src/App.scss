@@ -1,0 +1,42 @@
+$primary-color: #FBD157;
+$background-color: #F0F0F0;
+$white: #FFFFFF;
+$black: #000000;
+$light-grey: #F5F4F6;
+$grey: #A09BA3;
+$text-color: #1B141F;
+$font-family: "Inter", sans-serif;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+li,
+blockquote,
+fieldset, body {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+body {
+    font-family: $font-family;
+    font-size: 1rem;
+    background-color: $background-color;
+    color: $text-color;
+    margin: 0;
+    padding: 0;
+}
