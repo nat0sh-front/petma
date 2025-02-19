@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './Header.module.scss'
-import chat from '../../assets/icons/chat.svg'
+import search from '../../assets/icons/search.svg'
 import notification from '../../assets/icons/notification.svg'
 import avatar from '../../assets/images/avatar.png'
 import arrowDown from '../../assets/icons/arrow-down.svg'
@@ -13,7 +13,7 @@ const Header = () => {
                 <div className={styles.navButtons}>
                     <li className={styles.navItem}>
                         <button className={styles.navButton}>
-                            <img className={styles.navIcon} src={chat} alt="" />
+                            <img className={styles.navIcon} src={search} alt="" />
                         </button>
                     </li>
                     <li className={styles.navItem}>

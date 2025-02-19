@@ -6,6 +6,8 @@
     justify-content: end;
     padding: 10px 30px;
     border-bottom: 1px solid $grey;
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
     
     .nav {
         display: flex;
