@@ -43,11 +43,11 @@ const Sidebar = () => {
         <li className={styles.navItem}>
           <Link to="/zootaxi" className={styles.navLink}>
             <img className={styles.navIcon} src={zootaxi} alt="" />
-            <span className={styles.navLabel}>ЗооТакси</span>
+            <span className={styles.navLabel}>ZooТакси</span>
           </Link>
         </li>
         <li className={styles.navItem}>
-          <Link to="/settings" className={styles.navLink}>
+          <Link to="/login" className={styles.navLink}>
             <img className={styles.navIcon} src={settings} alt="" />
             <span className={styles.navLabel}>Настройки</span>
           </Link>

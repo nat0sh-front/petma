@@ -17,7 +17,7 @@ const LoginForm = () => {
                 <h4 className={styles.label}>Пароль</h4>
                 <input className={styles.input} type="password" id="password" placeholder="********" />
             </div>
-            <button className={styles.button} type="submit">Войти</button>
+            <button className={styles.button} type="submit"><Link to={"/"}>Войти</Link></button>
         </div>
         <hr/>
         <p className={styles.registerText}>У вас еще нет аккаунта?  <Link className={styles.link} to={"/register"}>Зарегистрируйтесь</Link></p>

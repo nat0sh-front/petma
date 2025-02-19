@@ -5,12 +5,14 @@
   grid-row: 1 / 3;
   background-color: $white;
   height: 100vh;
-  padding: 40px;
+  padding: 40px 30px;
   display: flex;
   flex-direction: column;
   gap: 40px;
   align-items: center;
-  border-right: 1px solid $grey;
+    position: sticky;
+    top: 0;
+    border-right: 1px solid $grey;
 
   .logo {
     width: 130px;
@@ -33,7 +35,7 @@
                 color: $text-color;
                 display: flex;
                 gap: 15px;
-                
+                font-weight: 500;
 
                 .navIcon {
                     width: 20px;
@@ -42,7 +44,11 @@
             }
 
             &.active {
-                background-color: $light-grey;
+                background-color: $active-color;
+                border: 1px solid $primary-color;
+                .navLink {
+                    font-weight: 700;
+                }
             }
         }
     }

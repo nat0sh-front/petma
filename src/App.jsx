@@ -2,9 +2,9 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import "./App.scss";
 
+import HomePage from './pages/HomePage/HomePage'
 import LoginPage from './pages/LoginPage/LoginPage'
 import RegisterPage from './pages/RegisterPage/RegisterPage'
-import HomePage from './pages/HomePage/HomePage';
 
 const App = () => {
   return (

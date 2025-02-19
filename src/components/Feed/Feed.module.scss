@@ -1,0 +1,16 @@
+@use '../../App.scss' as *;
+
+.feed {
+    grid-column: 1 / 2;
+    background-color: $white;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .postHR {
+        width: calc(100% - 40px);
+        border: 1px solid $light-grey;
+    }
+}

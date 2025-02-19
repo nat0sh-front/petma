@@ -26,7 +26,7 @@ const Header = () => {
                     <div className={styles.dropdown}>
                         <button className={styles.dropdownButton}>
                             <img className={styles.avatar} src={avatar} alt="Аватарка" />
-                            <span className={styles.username}>Иван Иванов</span>
+                            <span className={styles.username}>Натали Гвоздь</span>
                             <img className={styles.dropdownIcon} src={arrowDown} alt="" />
                         </button>
                         {/* <div className={styles.dropdownContent}>
