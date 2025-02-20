@@ -1,10 +1,18 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
 import styles from './LoginForm.module.scss'
+
 import logo from '../../assets/icons/logo.svg'
 
 
 const LoginForm = () => {
+  const navigation = useNavigate();
+
+  const handleLogin = () => {
+    navigation("/");
+  }
+
   return (
     <div className={styles.loginForm}>
         <img className={styles.logo} src={logo} alt="Логотип Petma" />
@@ -17,7 +25,7 @@ const LoginForm = () => {
                 <h4 className={styles.label}>Пароль</h4>
                 <input className={styles.input} type="password" id="password" placeholder="********" />
             </div>
-            <button className={styles.button} type="submit"><Link to={"/"}>Войти</Link></button>
+            <button className={styles.button} type="submit" onClick={handleLogin}>Войти</button>
         </div>
         <hr/>
         <p className={styles.registerText}>У вас еще нет аккаунта?  <Link className={styles.link} to={"/register"}>Зарегистрируйтесь</Link></p>

@@ -51,6 +51,15 @@
             font-weight: 500;
             margin-top: 10px;
             padding: 20px;
+
+            &:hover {
+                background-color: $secondary-color;
+                outline: 1px solid $primary-color;
+            }
+
+            &:active {
+                background-color: $primary-color;
+            }
         }
     }
 
