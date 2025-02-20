@@ -1,0 +1,86 @@
+@use '../../App.scss' as *;
+
+.profile {
+    background-color: $white;
+    border-radius: 10px;
+    position: relative;
+
+    .cover {
+        width: 100%;
+        height: 135px;
+        border-radius: 10px;
+        object-fit: cover;
+        margin-bottom: 55px;
+    }
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 3px solid $white;
+        position: absolute;
+        left: calc(50% - 50px);
+        top: 85px;
+    }
+
+    .content {
+        padding: 10px;
+        padding-top: 0;
+        display: grid;
+        gap: 10px;
+
+        .name {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+
+        .info {
+            color: $grey;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            justify-content: space-between;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .bio {
+            padding: 10px 20px;
+        }
+
+        .petContainer {
+            display: flex;
+            gap: 20px;
+            padding: 10px;
+            align-items: center;
+            margin-bottom: 20px;
+
+            .petButton {
+                width: 80px;
+                height: 80px;
+                border: none;
+                background-color: transparent;
+                border-radius: 50%;
+                padding: 0;
+
+                &.petAdd {
+                    width: 72px;
+                    height: 72px;
+                    border: 1px solid $primary-color;
+                    border-radius: 50%;
+                }
+
+                .petImage {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+
+                .petName {
+                    margin-top: -5px;
+                }
+            }
+            
+        }
+    }
+}
