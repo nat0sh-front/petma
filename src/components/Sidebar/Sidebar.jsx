@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./Sidebar.module.scss";
 
 import logo from "../../assets/icons/logo.svg";
@@ -11,47 +11,33 @@ import zootaxi from "../../assets/icons/zootaxi.svg";
 import settings from "../../assets/icons/settings.svg";
 
 const Sidebar = () => {
+  const navigate = useNavigate(); 
+  const location = useLocation(); 
+
+  const menuItems = [
+    { path: "/", icon: home, label: "Главная" },
+    { path: "/profile", icon: profile, label: "Профиль" },
+    { path: "/chat", icon: chat, label: "Чат" },
+    { path: "/store", icon: store, label: "Магазин" },
+    { path: "/zootaxi", icon: zootaxi, label: "ZooТакси" },
+    { path: "/login", icon: settings, label: "Настройки" },
+  ];
+
   return (
     <div className={styles.sidebar}>
       <img className={styles.logo} src={logo} alt="" />
       <nav className={styles.nav}>
         <ul className={styles.navList}>
-        <li className={`${styles.navItem} ${styles.active}`}>
-          <Link to="/" className={styles.navLink}>
-            <img className={styles.navIcon} src={home} alt="" />
-            <span className={styles.navLabel}>Главная</span>
-          </Link>
-        </li>
-        <li className={styles.navItem}>
-          <Link to="/profile" className={styles.navLink}>
-            <img className={styles.navIcon} src={profile} alt="" />
-            <span className={styles.navLabel}>Профиль</span>
-          </Link>
-        </li>
-        <li className={styles.navItem}>
-          <Link to="/chat" className={styles.navLink}>
-            <img className={styles.navIcon} src={chat} alt="" />
-            <span className={styles.navLabel}>Чат</span>
-          </Link>
-        </li>
-        <li className={styles.navItem}>
-          <Link to="/store" className={styles.navLink}>
-            <img className={styles.navIcon} src={store} alt="" />
-            <span className={styles.navLabel}>Магазин</span>
-          </Link>
-        </li>
-        <li className={styles.navItem}>
-          <Link to="/zootaxi" className={styles.navLink}>
-            <img className={styles.navIcon} src={zootaxi} alt="" />
-            <span className={styles.navLabel}>ZooТакси</span>
-          </Link>
-        </li>
-        <li className={styles.navItem}>
-          <Link to="/login" className={styles.navLink}>
-            <img className={styles.navIcon} src={settings} alt="" />
-            <span className={styles.navLabel}>Настройки</span>
-          </Link>
-        </li>
+          {menuItems.map((item) => (
+            <li
+              key={item.path}
+              className={`${styles.navItem} ${location.pathname === item.path ? styles.active : ""}`}>
+              <button className={styles.navButton} onClick={() => navigate(item.path)}>
+                <img className={styles.navIcon} src={item.icon} alt={item.label} />
+                <span className={styles.navLabel}>{item.label}</span>
+              </button>
+            </li>
+          ))}
         </ul>
       </nav>
     </div>

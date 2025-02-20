@@ -1,11 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import styles from './Header.module.scss'
+
 import search from '../../assets/icons/search.svg'
 import notification from '../../assets/icons/notification.svg'
 import avatar from '../../assets/images/avatar.png'
 import arrowDown from '../../assets/icons/arrow-down.svg'
+import logout from '../../assets/icons/logout.svg'
+
 
 const Header = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
+
+    const toggleDropdown = () => {
+        setIsOpen(!isOpen);
+    }
+
+    const handleLogout = () => {
+        navigate("/login");
+    }
+
   return (
     <div className={styles.header}>
         <nav className={styles.nav}>
@@ -24,16 +40,19 @@ const Header = () => {
                 </div>
                 <li className={styles.navItem}>
                     <div className={styles.dropdown}>
-                        <button className={styles.dropdownButton}>
+                        <button className={`${styles.dropdownButton} ${isOpen ? styles.active : ""}`} onClick={toggleDropdown}>
                             <img className={styles.avatar} src={avatar} alt="Аватарка" />
                             <span className={styles.username}>Натали Гвоздь</span>
-                            <img className={styles.dropdownIcon} src={arrowDown} alt="" />
+                            <img className={`${styles.dropdownIcon} ${isOpen ? styles.rotated : ""}`} src={arrowDown} alt="" />
                         </button>
-                        {/* <div className={styles.dropdownContent}>
-                            <button className={styles.logoutButton}>
-                                Выйти
+                        {isOpen && (
+                        <div className={styles.dropdownContent}>
+                            <button className={styles.logoutButton} onClick={handleLogout}>
+                                <img className={styles.logoutIcon} src={logout} alt="" />
+                                <span className={styles.logout}>Выйти</span>
                             </button>
-                        </div> */}
+                        </div>
+                        )}
                     </div>
                 </li>
             </ul>

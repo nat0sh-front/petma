@@ -52,6 +52,7 @@
             .dropdown {
                 display: flex;
                 gap: 10px;
+                position: relative;
 
                 .dropdownButton {
                     border: none;
@@ -73,6 +74,58 @@
                         color: $text-color;
                         width: 15px;
                         height: 15px;
+                        transition: all 0.3s ease;
+
+                        &.rotated {
+                            transform: rotate(180deg);
+                        }
+                    }
+                }
+
+                .dropdownContent {
+                    position: absolute;
+                    top: 45px;
+                    z-index: 100;
+                    width: 100%;
+                    height: 40px;
+                    background-color: $white;
+                    border-radius: 10px;
+                    box-shadow: 
+                        0 4px 8px rgba(0, 0, 0, 0.1), /* Нижняя тень */
+                        4px 0 8px rgba(0, 0, 0, 0.1), /* Правая тень */
+                        -4px 0 8px rgba(0, 0, 0, 0.1), /* Левая тень */
+                        0 -4px 8px rgba(0, 0, 0, 0.1); /* Верхняя тень */
+
+                    .logoutButton {
+                        border: none;
+                        background-color: transparent;
+                        cursor: pointer;
+                        color: $text-color;
+                        font-family: inherit;
+                        font-size: 20px;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                        gap: 15px;
+                        padding: 10px;
+                        width: 100%;
+                        height: 100%;
+                        transition: all 0.3s ease;
+                        border-radius: 10px;
+
+                        &:hover {
+                            background-color: $light-grey;
+                        }
+
+                        .logoutIcon {
+                            width: 20px;
+                            height: 20px;
+                        }
+
+                        .logout {
+                            color: $text-color;
+                            font-size: 1rem;
+                        }
                     }
                 }
             }
