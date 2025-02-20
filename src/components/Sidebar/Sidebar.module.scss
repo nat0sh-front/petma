@@ -44,7 +44,7 @@
             }
 
             &.active {
-                background-color: $active-color;
+                background-color: $secondary-color;
                 border: 1px solid $primary-color;
                 .navLink {
                     font-weight: 700;
