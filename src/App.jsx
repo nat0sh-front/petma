@@ -9,14 +9,14 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/profile' element={<ProfilePage />} />
-      </Routes>
-    </Router>
+      <Router>
+        <Routes>
+          <Route path="/dashboard" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path='/register' element={<RegisterPage />} />
+          <Route path='/profile' element={<ProfilePage />} />
+        </Routes>
+      </Router>
   )
 }
 

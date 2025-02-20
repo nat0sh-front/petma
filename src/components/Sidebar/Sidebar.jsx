@@ -15,7 +15,7 @@ const Sidebar = () => {
   const location = useLocation(); 
 
   const menuItems = [
-    { path: "/", icon: home, label: "Главная" },
+    { path: "/dashboard", icon: home, label: "Главная" },
     { path: "/profile", icon: profile, label: "Профиль" },
     { path: "/chat", icon: chat, label: "Чат" },
     { path: "/store", icon: store, label: "Магазин" },

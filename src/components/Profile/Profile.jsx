@@ -1,17 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styles from './Profile.module.scss'
 import cover from '../../assets/images/background.jpg'
 import avatar from '../../assets/images/avatar.png'
 import petImage from '../../assets/images/avatar.png'
 import addIcon from '../../assets/icons/plus.svg'
+import { AuthContext } from '../../context/AuthContext'
 
 const Profile = () => {
+  const {user} = useContext(AuthContext);
+
   return (
     <div className={styles.profile}>
         <img className={styles.cover} src={cover} alt="" />
         <img className={styles.avatar} src={avatar} alt="" />
         <div className={styles.content}>
-            <div className={styles.name}>Інжу Сұңқарқызы</div>
+            {user ? (
+                <span className={styles.name}>{user.name} {user.surname}</span>
+            ) : (
+                <span className={styles.name}>Гость</span>
+            )}
             <div className={styles.info}>
                 <span className={styles.city}>Алматы</span>
                 <span className={styles.followingCount}>24 подписок</span>
