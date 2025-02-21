@@ -16,21 +16,25 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (username, password) => {
         try {
-            const res = await axios.get(`${API_URL}?username=${username}`);
-            const userData = res.data.find(user => user.password === password);
-
+            const res = await axios.get(API_URL);
+            console.log("Список пользователей из JSON:", res.data);
+    
+            const userData = res.data.find(user => user.username === username && user.password === password);
+            
             if (userData) {
+                console.log("Найден пользователь:", userData);
                 setUser(userData);
                 localStorage.setItem("user", JSON.stringify(userData));
                 window.location.href = "/profile";
             } else {
+                console.log("Пользователь не найден. Проверь username и password.");
                 alert("Неправильный логин или пароль");
-                window.location.href = "/login";
             }
         } catch (error) {
             console.error("Ошибка входа: ", error);
         }
     };
+    
 
     const register = async (username, password, name, surname) => {
         try {
@@ -38,6 +42,7 @@ export const AuthProvider = ({ children }) => {
 
             if (res.data.length > 0) {
                 alert("Пользователь с таким логином уже существует");
+                window.location.href = "/login";
                 return;
             }
 
@@ -55,8 +60,17 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem("user");
     };
 
+    const updateUser = (updatedData) => {
+        setUser((prevUser) => {
+            const newUser = { ...prevUser, ...updatedData };
+            localStorage.setItem("user", JSON.stringify(newUser));
+            return newUser;
+        });
+    };
+    
+
     return (
-        <AuthContext.Provider value={{ user, login, register, logout }}>
+        <AuthContext.Provider value={{ user, login, register, logout, updateUser }}>
             {children}
         </AuthContext.Provider>
     );

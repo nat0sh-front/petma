@@ -10,7 +10,6 @@
         height: 135px;
         border-radius: 10px;
         object-fit: cover;
-        margin-bottom: 55px;
     }
 
     .avatar {
@@ -21,6 +20,29 @@
         position: absolute;
         left: calc(50% - 50px);
         top: 85px;
+        object-fit: cover;
+    }
+
+    .editButton {
+        border: none;
+        background-color: $primary-color;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        justify-self: end;
+        margin-right: 10px;
+        margin-top: 5px;
+
+        &:hover {
+            outline: 1px solid $primary-color;
+            background-color: $secondary-color;
+        }
+
+        .editIcon {
+            width: 30px;
+            height: 30px;
+        }
     }
 
     .content {
@@ -28,6 +50,7 @@
         padding-top: 0;
         display: grid;
         gap: 10px;
+        margin-top: 30px;
 
         .name {
             text-align: center;

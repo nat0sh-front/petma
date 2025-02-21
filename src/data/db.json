@@ -1,18 +1,11 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": 1740177681446,
       "username": "@nat0sh",
       "password": "Kesha_2004",
       "name": "Натали",
       "surname": "Гвоздь"
-    },
-    {
-    "id": 2,
-    "username": "@inzhu",
-    "password": "inzhu",
-    "name": "Інжу",
-    "surname": "Сұңқарқызы"
     }
   ]
 }

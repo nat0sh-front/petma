@@ -17,7 +17,7 @@ const RegisterForm = () => {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      register(username, name, surname, password);
+      register(username, password, name, surname);
       navigation("/");
     }
 

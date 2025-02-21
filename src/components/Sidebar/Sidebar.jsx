@@ -6,7 +6,7 @@ import logo from "../../assets/icons/logo.svg";
 import home from "../../assets/icons/home.svg";
 import profile from "../../assets/icons/profile.svg";
 import chat from "../../assets/icons/chat.svg";
-import store from "../../assets/icons/store.svg";
+import service from "../../assets/icons/service.svg";
 import zootaxi from "../../assets/icons/zootaxi.svg";
 import settings from "../../assets/icons/settings.svg";
 
@@ -18,7 +18,7 @@ const Sidebar = () => {
     { path: "/dashboard", icon: home, label: "Главная" },
     { path: "/profile", icon: profile, label: "Профиль" },
     { path: "/chat", icon: chat, label: "Чат" },
-    { path: "/store", icon: store, label: "Магазин" },
+    { path: "/store", icon: service, label: "Услуги" },
     { path: "/zootaxi", icon: zootaxi, label: "ZooТакси" },
     { path: "/login", icon: settings, label: "Настройки" },
   ];
