@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import styles from "./EditProfileModal.module.scss";
 import { AuthContext } from "../../context/AuthContext";
 import defaultCover from "../../assets/images/background.jpg";
@@ -6,16 +6,9 @@ import defaultAvatar from "../../assets/images/avatar.png";
 
 const EditProfileModal = ({ isOpen, onClose }) => {
     const { user, updateUser } = useContext(AuthContext);
-    const [formData, setFormData] = useState({
-        name: user?.name || "",
-        surname: user?.surname || "",
-        bio: user?.bio || "",
-        avatar: user?.avatar || "",
-        cover: user?.cover || "",
-    });
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        updateUser({ ...user, [e.target.name]: e.target.value });
     };
 
     const handleImageUpload = (e) => {
@@ -23,7 +16,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setFormData({ ...formData, [e.target.name]: reader.result });
+                updateUser({ ...user, [e.target.name]: reader.result });
             };
             reader.readAsDataURL(file);
         }
@@ -31,19 +24,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        // Проверка, чтобы пустые поля оставались прежними
-        const updatedData = {
-            ...user,
-            name: formData.name.trim() ? formData.name : user.name,
-            surname: formData.surname.trim() ? formData.surname : user.surname,
-            bio: formData.bio,
-            cover: formData.cover || user.cover,
-            avatar: formData.avatar || user.profileImage,
-        };
-
-        updateUser(updatedData);
-        localStorage.setItem("user", JSON.stringify(updatedData)); // Сохраняем в localStorage
+        localStorage.setItem("user", JSON.stringify(user)); // Сохраняем в localStorage
         onClose();
     };
 
@@ -60,7 +41,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
                     <h4 className={styles.label}>Обложка:</h4>
                     <input type="file" name="cover" accept="image/*" onChange={handleImageUpload} />
                     <img 
-                        src={formData.cover || defaultCover} 
+                        src={user.cover || defaultCover} 
                         alt="Cover" 
                         className={styles.preview} 
                     />
@@ -68,19 +49,19 @@ const EditProfileModal = ({ isOpen, onClose }) => {
                     <h4 className={styles.label}>Фото профиля:</h4>
                     <input type="file" name="avatar" accept="image/*" onChange={handleImageUpload} />
                     <img 
-                        src={formData.avatar || defaultAvatar} 
+                        src={user.avatar || defaultAvatar} 
                         alt="Avatar" 
                         className={styles.preview} 
                     />
                     
                     <h4 className={styles.label}>Имя:</h4>
-                    <input type="text" name="name" value={formData.name} onChange={handleChange} />
+                    <input type="text" name="name" value={user.name || ""} onChange={handleChange} />
                     
                     <h4 className={styles.label}>Фамилия:</h4>
-                    <input type="text" name="surname" value={formData.surname} onChange={handleChange} />
+                    <input type="text" name="surname" value={user.surname || ""} onChange={handleChange} />
                     
                     <h4 className={styles.label}>О себе:</h4>
-                    <textarea name="bio" value={formData.bio} onChange={handleChange} />
+                    <textarea name="bio" value={user.bio || ""} onChange={handleChange} />
                     
                     <button type="submit" className={styles.saveButton}>Сохранить</button>
                 </form>

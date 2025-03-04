@@ -46,7 +46,7 @@ const Header = () => {
                                 className={`${styles.dropdownButton} ${isOpen ? styles.active : ''}`}
                                 onClick={toggleDropdown}
                             >
-                                <img className={styles.avatar} src={avatar} alt="Аватарка" />
+                                <img className={styles.avatar} src={user?.avatar || avatar} alt="Аватарка" />
                                 {user ? (
                                     <span className={styles.username}>{user.name} {user.surname}</span>
                                 ) : (

@@ -1,30 +1,33 @@
 @use '../../App.scss' as *;
 
 .friendRec {
-    display: flex;
-    height: 70px;
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 130px;
     padding: 10px;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 
     .friendHeader {
         display: flex;
         gap: 10px;
-
-        .avatar {
-            width: 40px;
-            height: 40px;
-        }
-        
+        justify-content: space-between;
+        align-items: center;
         
         .friendInfo {
             display: flex;
-            flex-direction: column;
+            gap: 10px;
             font-size: 0.8rem;
-            justify-content: center;
-    
-            .bio {
-                color: $grey;
+            align-items: center;
+
+            .avatar {
+                width: 40px;
+                height: 40px;
+            }
+
+            .friendText {
+                .bio {
+                    color: $grey;
+                }
             }
         }
     }

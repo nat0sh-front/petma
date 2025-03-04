@@ -6,7 +6,6 @@ const Recomendations = () => {
   return (
     <div className={styles.recomendations}>
         <FriendRec />
-        <FriendRec />
     </div>
   )
 }
