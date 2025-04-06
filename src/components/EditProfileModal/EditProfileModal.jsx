@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import styles from "./EditProfileModal.module.scss";
 import { AuthContext } from "../../context/AuthContext";
-import defaultCover from "../../assets/images/background.jpg";
 import defaultAvatar from "../../assets/images/avatar.png";
 
 const EditProfileModal = ({ isOpen, onClose }) => {
@@ -38,31 +37,29 @@ const EditProfileModal = ({ isOpen, onClose }) => {
                     <button className={styles.closeButton} onClick={onClose}>×</button>
                 </div>
                 <form className={styles.form} onSubmit={handleSubmit}>
-                    <h4 className={styles.label}>Обложка:</h4>
-                    <input type="file" name="cover" accept="image/*" onChange={handleImageUpload} />
-                    <img 
-                        src={user.cover || defaultCover} 
-                        alt="Cover" 
-                        className={styles.preview} 
-                    />
-                    
-                    <h4 className={styles.label}>Фото профиля:</h4>
-                    <input type="file" name="avatar" accept="image/*" onChange={handleImageUpload} />
-                    <img 
-                        src={user.avatar || defaultAvatar} 
-                        alt="Avatar" 
-                        className={styles.preview} 
-                    />
-                    
-                    <h4 className={styles.label}>Имя:</h4>
-                    <input type="text" name="name" value={user.name || ""} onChange={handleChange} />
-                    
-                    <h4 className={styles.label}>Фамилия:</h4>
-                    <input type="text" name="surname" value={user.surname || ""} onChange={handleChange} />
-                    
-                    <h4 className={styles.label}>О себе:</h4>
-                    <textarea name="bio" value={user.bio || ""} onChange={handleChange} />
-                    
+                    <div className={styles.avatar}>
+                        <span className={styles.label}>Фото профиля:</span>
+                        <div className={styles.avatarContent}>
+                            <img 
+                                src={user.avatar || defaultAvatar} 
+                                alt="Avatar" 
+                                className={styles.preview} 
+                            />
+                            <input className={styles.fileInput} type="file" name="avatar" accept="image/*" onChange={handleImageUpload} />
+                        </div>
+                    </div>
+                    <div className={styles.name}>
+                        <span className={styles.label}>Имя:</span>
+                        <input type="text" name="name" value={user.name || ""} onChange={handleChange} />
+                    </div>
+                    <div className={styles.surname}>
+                        <span className={styles.label}>Фамилия:</span>
+                        <input type="text" name="surname" value={user.surname || ""} onChange={handleChange} />
+                    </div>
+                    <div className={styles.bio}>
+                        <span className={styles.label}>О себе:</span>
+                        <textarea name="bio" maxLength="100" value={user.bio || ""} onChange={handleChange} />
+                    </div>                    
                     <button type="submit" className={styles.saveButton}>Сохранить</button>
                 </form>
             </div>
