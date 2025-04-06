@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./EditProfileModal.module.scss";
 import { AuthContext } from "../../context/AuthContext";
 import defaultAvatar from "../../assets/images/avatar.png";
@@ -6,8 +6,26 @@ import defaultAvatar from "../../assets/images/avatar.png";
 const EditProfileModal = ({ isOpen, onClose }) => {
     const { user, updateUser } = useContext(AuthContext);
 
-    const handleChange = (e) => {
-        updateUser({ ...user, [e.target.name]: e.target.value });
+    const [name, setName] = useState(user?.name || '');
+    const [surname, setSurname] = useState(user?.surname || '');
+    const [avatar, setAvatar] = useState(user?.avatar || ''); 
+    const [bio, setBio] = useState(user?.bio || '');
+
+    useEffect(() => {
+        setName(user?.name || '');
+        setSurname(user?.surname || '');
+        setAvatar(user?.avatar || '');
+        setBio(user?.bio || '');
+    }, [user]);
+
+    if (!isOpen) return null; 
+    if (!user) return null; 
+
+    const handleSave = async (e) => {
+        e.preventDefault();
+        const updatedUser = { ...user, name, surname, avatar, bio };
+        await updateUser(updatedUser);
+        onClose();
     };
 
     const handleImageUpload = (e) => {
@@ -15,19 +33,11 @@ const EditProfileModal = ({ isOpen, onClose }) => {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                updateUser({ ...user, [e.target.name]: reader.result });
+                setAvatar(reader.result);
             };
             reader.readAsDataURL(file);
         }
     };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        localStorage.setItem("user", JSON.stringify(user)); // Сохраняем в localStorage
-        onClose();
-    };
-
-    if (!isOpen) return null;
 
     return (
         <div className={styles.modalOverlay} onClick={onClose}>
@@ -36,12 +46,12 @@ const EditProfileModal = ({ isOpen, onClose }) => {
                     <h2>Редактировать профиль</h2>
                     <button className={styles.closeButton} onClick={onClose}>×</button>
                 </div>
-                <form className={styles.form} onSubmit={handleSubmit}>
+                <form className={styles.form} onSubmit={handleSave}>
                     <div className={styles.avatar}>
                         <span className={styles.label}>Фото профиля:</span>
                         <div className={styles.avatarContent}>
                             <img 
-                                src={user.avatar || defaultAvatar} 
+                                src={avatar || defaultAvatar} 
                                 alt="Avatar" 
                                 className={styles.preview} 
                             />
@@ -50,15 +60,15 @@ const EditProfileModal = ({ isOpen, onClose }) => {
                     </div>
                     <div className={styles.name}>
                         <span className={styles.label}>Имя:</span>
-                        <input type="text" name="name" value={user.name || ""} onChange={handleChange} />
+                        <input type="text" name="name" value={name || ""} onChange={(e) => setName(e.target.value)} />
                     </div>
                     <div className={styles.surname}>
                         <span className={styles.label}>Фамилия:</span>
-                        <input type="text" name="surname" value={user.surname || ""} onChange={handleChange} />
+                        <input type="text" name="surname" value={surname || ""} onChange={(e) => setSurname(e.target.value)} />
                     </div>
                     <div className={styles.bio}>
                         <span className={styles.label}>О себе:</span>
-                        <textarea name="bio" maxLength="100" value={user.bio || ""} onChange={handleChange} />
+                        <textarea name="bio" maxLength="100" value={bio || ""} onChange={(e) => setBio(e.target.value)} />
                     </div>                    
                     <button type="submit" className={styles.saveButton}>Сохранить</button>
                 </form>

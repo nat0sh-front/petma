@@ -7,34 +7,37 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const API_URL = "http://localhost:5000/users";
 
+    // Загружаем пользователя по ID при загрузке страницы
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
+        const userId = localStorage.getItem("userId");
+        if (userId) {
+            axios.get(`${API_URL}/${userId}`)
+                .then(res => setUser(res.data))
+                .catch(err => {
+                    console.error("Ошибка при загрузке пользователя:", err);
+                    localStorage.removeItem("userId");
+                });
         }
     }, []);
 
     const login = async (username, password) => {
         try {
             const res = await axios.get(API_URL);
-            console.log("Список пользователей из JSON:", res.data);
-    
-            const userData = res.data.find(user => user.username === username && user.password === password);
-            
+            const userData = res.data.find(
+                user => user.username === username && user.password === password
+            );
+
             if (userData) {
-                console.log("Найден пользователь:", userData);
                 setUser(userData);
-                localStorage.setItem("user", JSON.stringify(userData));
+                localStorage.setItem("userId", userData.id); // сохраняем только id
                 window.location.href = "/profile";
             } else {
-                console.log("Пользователь не найден. Проверь username и password.");
                 alert("Неправильный логин или пароль");
             }
         } catch (error) {
             console.error("Ошибка входа: ", error);
         }
     };
-    
 
     const register = async (username, password, name, surname) => {
         try {
@@ -42,13 +45,20 @@ export const AuthProvider = ({ children }) => {
 
             if (res.data.length > 0) {
                 alert("Пользователь с таким логином уже существует");
-                window.location.href = "/login";
                 return;
             }
 
-            const newUser = { id: Date.now(), username, password, name, surname };
-            await axios.post(API_URL, newUser);
+            const newUser = {
+                id: Date.now(),
+                username,
+                password,
+                name,
+                surname,
+                avatar: "",
+                bio: ""
+            };
 
+            await axios.post(API_URL, newUser);
             window.location.href = "/login";
         } catch (error) {
             console.error("Ошибка регистрации: ", error);
@@ -57,17 +67,18 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         setUser(null);
-        localStorage.clear();
+        localStorage.removeItem("userId");
     };
 
-    const updateUser = (updatedData) => {
-        setUser((prevUser) => {
-            const newUser = { ...prevUser, ...updatedData };
-            localStorage.setItem("user", JSON.stringify(newUser));
-            return newUser;
-        });
+    const updateUser = async (updatedData) => {
+        try {
+            const updatedUser = { ...user, ...updatedData };
+            await axios.put(`${API_URL}/${user.id}`, updatedUser);
+            setUser(updatedUser);
+        } catch (error) {
+            console.error("Ошибка при обновлении данных:", error);
+        }
     };
-    
 
     return (
         <AuthContext.Provider value={{ user, login, register, logout, updateUser }}>

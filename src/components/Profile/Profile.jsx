@@ -10,32 +10,17 @@ import editIcon from '../../assets/icons/edit.svg';
 import EditProfileModal from '../EditProfileModal/EditProfileModal';
 
 const Profile = () => {
-    const { user, updateUser } = useContext(AuthContext);
-    const [currentUser, setCurrentUser] = useState(user);
-
-    useEffect(() => {
-        const storedUser = JSON.parse(localStorage.getItem('user'));
-        if (storedUser) {
-            setCurrentUser(storedUser);
-        }
-    }, [user]); // Обновляем при изменении user
-
-    const handleProfileUpdate = (updatedUser) => {
-        updateUser(updatedUser);
-        localStorage.setItem('user', JSON.stringify(updatedUser)); // Обновляем localStorage
-        setCurrentUser(updatedUser);
-    };
-
+    const { user } = useContext(AuthContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
         <div className={styles.profile}>
             <header className={styles.header}>
-                <img className={styles.avatar} src={currentUser?.avatar || defaultAvatar} alt="Avatar" />
+                <img className={styles.avatar} src={user?.avatar || defaultAvatar} alt="Avatar" />
                 <div className={styles.info}>
                     <div className={styles.nameContainer}>
                         <span className={styles.name}>
-                            {currentUser?.name || 'Гость'} {currentUser?.surname || ''}
+                            {user?.name || 'Гость'} {user?.surname || ''}
                         </span>
                     </div>
                     <div className={styles.countContainer}>
@@ -45,7 +30,7 @@ const Profile = () => {
                     </div>
                     <div className={styles.bioContainer}>
                         <span className={styles.bio}>
-                            {currentUser?.bio ? currentUser.bio : 'Расскажите о себе...'}
+                            {user?.bio ? user.bio : 'Расскажите о себе...'}
                         </span>
                     </div>
                 </div>
@@ -106,45 +91,9 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-
-            {/* <img className={styles.avatar} src={currentUser?.avatar || defaultAvatar} alt="Avatar" />
-            <span className={styles.name}>
-                    {currentUser?.name || 'Гость'} {currentUser?.surname || ''}
-            </span>
-            <button className={styles.editButton} onClick={() => setIsModalOpen(true)}>
-                <img className={styles.editIcon} src={edit} alt="Edit" />
-            </button>
-            <div className={styles.content}>
-                
-                <div className={styles.info}>
-                    <span className={styles.petCount}>0 питомцев</span>
-                    <span className={styles.followingCount}>0 друзей</span>
-                    <span className={styles.followerCount}>0 постов</span>
-                </div>
-                <span className={styles.bio}>
-                    {currentUser?.bio ? currentUser.bio : 'Расскажите о себе...'}
-                </span>
-                <div className={styles.petContainer}>
-                    <button className={styles.petButton}>
-                        <img className={styles.petImage} src={defaultAvatar} alt="Pet" />
-                        <span className={styles.petName}>Барсик</span>
-                    </button>
-                    <button className={`${styles.petButton} ${styles.petAdd}`}>
-                        <img className={styles.petImg} src={addIcon} alt="Add Pet" />
-                    </button>
-                </div>
-            </div>
             <EditProfileModal 
                 isOpen={isModalOpen} 
                 onClose={() => setIsModalOpen(false)} 
-                onUpdate={handleProfileUpdate}
-                userData={currentUser}
-            /> */}
-            <EditProfileModal 
-                isOpen={isModalOpen} 
-                onClose={() => setIsModalOpen(false)} 
-                onUpdate={handleProfileUpdate}
-                userData={currentUser}
             />
         </div>
     );
