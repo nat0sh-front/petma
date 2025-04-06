@@ -3,107 +3,302 @@
 .profile {
     background-color: $white;
     border-radius: 10px;
-    position: relative;
+    padding: 40px 30px 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 
-    .cover {
-        width: 100%;
-        height: 135px;
-        border-radius: 10px;
-        object-fit: cover;
-    }
-
-    .avatar {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        border: 3px solid $white;
-        position: absolute;
-        left: calc(50% - 50px);
-        top: 85px;
-        object-fit: cover;
-    }
-
-    .editButton {
-        border: none;
-        background-color: $primary-color;
-        border-radius: 50%;
+    .header {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        justify-self: end;
-        margin-right: 10px;
-        margin-top: 5px;
+        gap: 30px;
+        width: 600px;
+        justify-self: center;
 
-        &:hover {
-            outline: 1px solid $primary-color;
-            background-color: $secondary-color;
-        }
-
-        .editIcon {
-            width: 30px;
-            height: 30px;
-        }
-    }
-
-    .content {
-        padding: 10px;
-        padding-top: 0;
-        display: grid;
-        gap: 10px;
-        margin-top: 30px;
-
-        .name {
-            text-align: center;
-            font-size: 1.3rem;
-            font-weight: 500;
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .info {
-            color: $grey;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            justify-content: space-between;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .bio {
-            padding: 10px 20px;
-        }
-
-        .petContainer {
             display: flex;
+            flex-direction: column;
+            width: 400px;
             gap: 20px;
-            padding: 10px;
-            align-items: center;
-            margin-bottom: 20px;
 
-            .petButton {
-                width: 80px;
-                height: 80px;
-                border: none;
-                background-color: transparent;
-                border-radius: 50%;
-                padding: 0;
+            .nameContainer {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
 
-                &.petAdd {
-                    width: 72px;
-                    height: 72px;
-                    border: 1px solid $primary-color;
-                    border-radius: 50%;
+                .name {
+                    font-size: 1.3rem;
+                    font-weight: 500;
                 }
 
-                .petImage {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: contain;
-                }
+                .editButton {
+                    border: none;
+                    background-color: transparent;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
 
-                .petName {
-                    margin-top: -5px;
+                    .editIcon {
+                        width: 30px;
+                        height: 30px;
+                        filter: grayscale(50%);
+                        transition: transform 0.3s ease;
+
+                        &:hover {
+                            transform: scale(1.1);
+                        }
+                    }
                 }
             }
             
+            .countContainer {
+                display: flex;
+                justify-content: space-between;
+                color: $grey;
+            }
+
+            .bioContainer {
+                
+            }
         }
     }
+
+    .profileButtons {
+        display: flex;
+        gap: 20px;
+
+        .addPostButton, .editButton {
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            width: 100%;
+            gap: 10px;
+
+            .addIcon, .editIcon {
+                color: $text-color;
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        .addPostButton {
+            background-color: $primary-color;
+            font-weight: 500;
+            transition: all 0.1s ease;
+
+            &:hover {
+                background-color: $secondary-color;
+                outline: 1px solid $primary-color;
+            }
+
+            .addIcon {
+                padding: 5px;
+            }
+        }
+
+        .editButton {
+            background-color: $light-grey;
+            font-weight: 500;
+            transition: all 0.1s ease;
+
+            &:hover {
+                outline: 1px solid $grey;
+            }
+        }
+    }
+
+    .pets {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .petsTitle {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .petsContent {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .pet {
+            display: flex;
+            gap: 20px;
+            min-width: 350px;
+
+            .petAvatar {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .petInfo {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                .petName {
+                    font-size: 1.2rem;
+                    font-weight: 500;
+                }
+
+                .petInfoWrapper {
+                    display: flex;
+                    gap: 5px;
+
+                    span {
+                        background-color: $light-grey;
+                        color: $grey;
+                        border-radius: 20px;
+                        padding: 5px 10px;
+                    }
+                }
+            }
+        }
+    }
+
+    .posts {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+
+        .postsTitle {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .postsContent {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+
+            .post {
+                .postImage {
+                    width: 100%;
+                    height: 300px;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+
+
+    // .cover {
+    //     width: 100%;
+    //     height: 135px;
+    //     border-radius: 10px;
+    //     object-fit: cover;
+    // }
+
+    // .avatar {
+    //     width: 100px;
+    //     height: 100px;
+    //     border-radius: 50%;
+    //     border: 3px solid $white;
+    //     position: absolute;
+    //     left: calc(50% - 50px);
+    //     top: 85px;
+    //     object-fit: cover;
+    // }
+
+    // .editButton {
+    //     border: none;
+    //     background-color: $primary-color;
+    //     border-radius: 50%;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //     justify-self: end;
+    //     margin-right: 10px;
+    //     margin-top: 5px;
+
+    //     &:hover {
+    //         outline: 1px solid $primary-color;
+    //         background-color: $secondary-color;
+    //     }
+
+    //     .editIcon {
+    //         width: 30px;
+    //         height: 30px;
+    //     }
+    // }
+
+    // .content {
+    //     padding: 10px;
+    //     padding-top: 0;
+    //     display: grid;
+    //     gap: 10px;
+    //     margin-top: 30px;
+
+    //     .name {
+    //         text-align: center;
+    //         font-size: 1.3rem;
+    //         font-weight: 500;
+    //     }
+
+    //     .info {
+    //         color: $grey;
+    //         display: grid;
+    //         grid-template-columns: repeat(3, 1fr);
+    //         justify-content: space-between;
+    //         padding: 10px;
+    //         text-align: center;
+    //     }
+
+    //     .bio {
+    //         padding: 10px 20px;
+    //     }
+
+    //     .petContainer {
+    //         display: flex;
+    //         gap: 20px;
+    //         padding: 10px;
+    //         align-items: center;
+    //         margin-bottom: 20px;
+
+    //         .petButton {
+    //             width: 80px;
+    //             height: 80px;
+    //             border: none;
+    //             background-color: transparent;
+    //             border-radius: 50%;
+    //             padding: 0;
+
+    //             &.petAdd {
+    //                 width: 72px;
+    //                 height: 72px;
+    //                 border: 1px solid $primary-color;
+    //                 border-radius: 50%;
+    //             }
+
+    //             .petImage {
+    //                 width: 100%;
+    //                 height: 100%;
+    //                 object-fit: contain;
+    //             }
+
+    //             .petName {
+    //                 margin-top: -5px;
+    //             }
+    //         }
+            
+    //     }
+    // }
 }
