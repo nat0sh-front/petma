@@ -1,0 +1,37 @@
+@use '../../App.scss' as *;
+
+.pet {
+    display: flex;
+    gap: 20px;
+    min-width: 350px;
+
+    .petAvatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .petInfo {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .petName {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .petInfoWrapper {
+            display: flex;
+            gap: 5px;
+
+            span {
+                background-color: $light-grey;
+                color: $grey;
+                border-radius: 20px;
+                padding: 5px 10px;
+            }
+        }
+    }
+}

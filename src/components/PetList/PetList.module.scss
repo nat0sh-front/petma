@@ -1,0 +1,45 @@
+@use '../../App.scss' as *;
+
+.pets {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .petsHeader {
+        display: flex;
+        justify-content: space-between;
+
+        .petsTitle {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .addPetButton {
+            border: none;
+            background-color: $primary-color;
+            border-radius: 10px;
+            cursor: pointer;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+
+            &:hover {
+                background-color: $secondary-color;
+                outline: 1px solid $primary-color;
+            }
+
+            .addIcon {
+                width: 15px;
+                height: 15px;
+            }
+        }
+    }
+
+    .petsContent {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+}

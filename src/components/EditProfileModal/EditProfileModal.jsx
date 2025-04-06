@@ -68,7 +68,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
                     </div>
                     <div className={styles.bio}>
                         <span className={styles.label}>О себе:</span>
-                        <textarea name="bio" maxLength="100" value={bio || ""} onChange={(e) => setBio(e.target.value)} />
+                        <textarea name="bio" maxLength="150" value={bio || ""} onChange={(e) => setBio(e.target.value)} />
                     </div>                    
                     <button type="submit" className={styles.saveButton}>Сохранить</button>
                 </form>

@@ -11,9 +11,9 @@
 
     .header {
         display: flex;
-        gap: 30px;
-        width: 600px;
+        gap: 50px;
         justify-self: center;
+        margin-left: 30px;
 
         .avatar {
             width: 110px;
@@ -25,7 +25,7 @@
         .info {
             display: flex;
             flex-direction: column;
-            width: 400px;
+            width: 500px;
             gap: 20px;
 
             .nameContainer {
@@ -66,7 +66,7 @@
             }
 
             .bioContainer {
-                
+                overflow-wrap: break-word;
             }
         }
     }
@@ -116,59 +116,6 @@
 
             &:hover {
                 outline: 1px solid $grey;
-            }
-        }
-    }
-
-    .pets {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-
-        .petsTitle {
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-
-        .petsContent {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .pet {
-            display: flex;
-            gap: 20px;
-            min-width: 350px;
-
-            .petAvatar {
-                width: 80px;
-                height: 80px;
-                border-radius: 50%;
-                object-fit: cover;
-            }
-
-            .petInfo {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-
-                .petName {
-                    font-size: 1.2rem;
-                    font-weight: 500;
-                }
-
-                .petInfoWrapper {
-                    display: flex;
-                    gap: 5px;
-
-                    span {
-                        background-color: $light-grey;
-                        color: $grey;
-                        border-radius: 20px;
-                        padding: 5px 10px;
-                    }
-                }
             }
         }
     }

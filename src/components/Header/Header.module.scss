@@ -91,12 +91,12 @@
                     width: 100%;
                     height: 40px;
                     background-color: $white;
-                    border-radius: 10px;
+                    border-radius: 5px;
                     box-shadow: 
                         0 4px 8px rgba(0, 0, 0, 0.1), /* Нижняя тень */
-                        4px 0 8px rgba(0, 0, 0, 0.1), /* Правая тень */
-                        -4px 0 8px rgba(0, 0, 0, 0.1), /* Левая тень */
-                        0 -4px 8px rgba(0, 0, 0, 0.1); /* Верхняя тень */
+                        4px 0 8px rgba(0, 0, 0, 0.1); /* Правая тень */
+                        // -4px 0 8px rgba(0, 0, 0, 0.1), /* Левая тень */
+                        // 0 -4px 8px rgba(0, 0, 0, 0.1); /* Верхняя тень */
 
                     .logoutButton {
                         border: none;

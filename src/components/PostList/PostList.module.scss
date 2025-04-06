@@ -1,0 +1,19 @@
+@use '../../App.scss' as *;
+
+.posts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+
+    .postsTitle {
+        font-size: 1.3rem;
+        font-weight: 600;
+    }
+
+    .postsContent {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+}
