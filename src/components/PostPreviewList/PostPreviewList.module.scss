@@ -1,17 +1,18 @@
 @use '../../App.scss' as *;
 
-.posts {
+.postsPreviewList {
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 100%;
+    margin: 0 auto;
 
-    .postsTitle {
+    .postsPreviewTitle {
         font-size: 1.3rem;
         font-weight: 600;
     }
 
-    .postsContent {
+    .postsPreviewContent {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 10px;

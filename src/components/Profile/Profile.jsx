@@ -9,7 +9,7 @@ import addIcon from '../../assets/icons/plus.svg';
 import editIcon from '../../assets/icons/edit.svg';
 import EditProfileModal from '../EditProfileModal/EditProfileModal';
 import PetList from '../PetList/PetList';
-import PostList from '../PostList/PostList';
+import PostPreviewList from '../PostPreviewList/PostPreviewList';
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
@@ -48,7 +48,7 @@ const Profile = () => {
                 </button>
             </div>
             <PetList />
-            <PostList />
+            <PostPreviewList />
             <EditProfileModal 
                 isOpen={isModalOpen} 
                 onClose={() => setIsModalOpen(false)} 
