@@ -18,11 +18,7 @@ const Profile = () => {
     const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
     const [isAddPostModalOpen, setIsAddPostModalOpen] = useState(false);
 
-    const [posts, setPosts] = useState([])
-
-    useEffect(() => {
-        console.log("User from context:", user);
-      }, [user]);
+    const [posts, setPosts] = useState([]);
 
     const fetchPosts = async () => {
         try {
@@ -78,7 +74,7 @@ const Profile = () => {
             <PetList />
             <PostPreviewList posts={posts} />
             <AddPostModal 
-                isOpen={isAddPublicationModalOpen} 
+                isOpen={isAddPostModalOpen} 
                 onClose={() => setIsAddPostModalOpen(false)}
                 onPostAdded={handlePostAdded}
             />

@@ -10,12 +10,10 @@ export const AuthProvider = ({ children }) => {
     // Загружаем пользователя по ID при загрузке страницы
     useEffect(() => {
         const userId = localStorage.getItem("userId");
-        console.log("User ID from localStorage:", userId); 
         if (userId) {
             axios.get(`${API_URL}/${String(userId)}`)
             .then(res => {
                 setUser(res.data);
-                console.log("User data from API:", user); // Логирование данных пользователя, полученных с сервера
                 })
                 .catch(err => {
                     console.error("Ошибка при загрузке пользователя:", err);

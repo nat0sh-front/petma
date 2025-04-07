@@ -53,6 +53,7 @@
                 display: flex;
                 gap: 10px;
                 position: relative;
+                min-width: 180px;
 
                 .dropdownButton {
                     border: none;
@@ -60,16 +61,22 @@
                     color: inherit;
                     font-size: 1rem;
                     cursor: pointer;
+                    width: 100%;
                     display: flex;
-                    justify-content: center;
+                    justify-content: space-between;
                     align-items: center;
                     gap: 10px;
 
-                    .avatar {
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 50%;
-                        object-fit: cover;
+                    .userInfo {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        .avatar {
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                        }
                     }
 
                     .dropdownIcon {
