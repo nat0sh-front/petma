@@ -1,11 +1,14 @@
 import React from 'react'
 import styles from './PostPreview.module.scss'
-import defaultBackground from '../../assets/images/background.jpg'
 
-const PostPreview = () => {
+const PostPreview = ({ image }) => {
+  if (!image) {
+    return null;  
+  }
+
   return (
     <div className={styles.postPreview}>
-        <img className={styles.postImage} src={defaultBackground} alt="Post Image" />
+        <img className={styles.postImage} src={image} alt="Post Image" />
     </div>
   )
 }

@@ -7,12 +7,12 @@ import search from '../../assets/icons/search.svg';
 import notification from '../../assets/icons/notification.svg';
 import avatar from '../../assets/images/avatar.png';
 import arrowDown from '../../assets/icons/arrow-down.svg';
-import logout from '../../assets/icons/logout.svg';
+import logoutIcon from '../../assets/icons/logout.svg';
 import { AuthContext } from '../../context/AuthContext';
 
 const Header = () => {
     const navigate = useNavigate();
-    const { user } = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -21,6 +21,7 @@ const Header = () => {
     };
 
     const handleLogout = () => {
+        logout();
         navigate('/login');
     };
 
@@ -61,7 +62,7 @@ const Header = () => {
                             {isOpen && (
                                 <div className={styles.dropdownContent}>
                                     <button className={styles.logoutButton} onClick={handleLogout}>
-                                        <img className={styles.logoutIcon} src={logout} alt="" />
+                                        <img className={styles.logoutIcon} src={logoutIcon} alt="" />
                                         <span className={styles.logout}>Выйти</span>
                                     </button>
                                 </div>

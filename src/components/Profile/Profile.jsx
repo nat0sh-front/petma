@@ -10,10 +10,38 @@ import editIcon from '../../assets/icons/edit.svg';
 import EditProfileModal from '../EditProfileModal/EditProfileModal';
 import PetList from '../PetList/PetList';
 import PostPreviewList from '../PostPreviewList/PostPreviewList';
+import AddPostModal from '../AddPostModal/AddPostModal';
+import axios from 'axios';
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
+    const [isAddPostModalOpen, setIsAddPostModalOpen] = useState(false);
+
+    const [posts, setPosts] = useState([])
+
+    useEffect(() => {
+        console.log("User from context:", user);
+      }, [user]);
+
+    const fetchPosts = async () => {
+        try {
+          const response = await axios.get('http://localhost:5000/posts', { params: { userId: user?.id } });
+          setPosts(response.data);
+        } catch (error) {
+          console.error('Ошибка при загрузке постов:', error);
+        }
+      };
+    
+      useEffect(() => {
+        if (user?.id) {
+          fetchPosts();
+        }
+      }, [user]);
+    
+      const handlePostAdded = () => {
+        fetchPosts();  
+      };
 
     return (
         <div className={styles.profile}>
@@ -38,20 +66,25 @@ const Profile = () => {
                 </div>
             </header>
             <div className={styles.profileButtons}>
-                <button className={styles.addPostButton}>
+                <button className={styles.addPostButton} onClick={() => setIsAddPostModalOpen(true)}>
                     <img className={styles.addIcon} src={addIcon} alt="Add Publication" />
                     <span className={styles.addPostButtonText}>Опубликовать</span>
                 </button>
-                <button className={styles.editButton} onClick={() => setIsModalOpen(true)}>
+                <button className={styles.editButton} onClick={() => setIsEditProfileModalOpen(true)}>
                     <img className={styles.editIcon} src={editIcon} alt="Edit Profile" />
                     <span className={styles.editButtonText}>Редактировать</span>
                 </button>
             </div>
             <PetList />
-            <PostPreviewList />
+            <PostPreviewList posts={posts} />
+            <AddPostModal 
+                isOpen={isAddPublicationModalOpen} 
+                onClose={() => setIsAddPostModalOpen(false)}
+                onPostAdded={handlePostAdded}
+            />
             <EditProfileModal 
-                isOpen={isModalOpen} 
-                onClose={() => setIsModalOpen(false)} 
+                isOpen={isEditProfileModalOpen} 
+                onClose={() => setIsEditProfileModalOpen(false)} 
             />
         </div>
     );
