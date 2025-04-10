@@ -12,13 +12,16 @@ import PetList from '../PetList/PetList';
 import PostPreviewList from '../PostPreviewList/PostPreviewList';
 import AddPostModal from '../AddPostModal/AddPostModal';
 import axios from 'axios';
+import AddPetModal from '../AddPetModal/AddPetModal';
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
     const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
     const [isAddPostModalOpen, setIsAddPostModalOpen] = useState(false);
+    const [isAddPetModalOpen, setIsAddPetModalOpen] = useState(false);
 
     const [posts, setPosts] = useState([]);
+    const [pets, setPets] = useState([]);
 
     const fetchPosts = async () => {
         try {
@@ -28,16 +31,30 @@ const Profile = () => {
           console.error('Ошибка при загрузке постов:', error);
         }
       };
+
+    const fetchPets = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/pets', { params: { ownerId: user?.id } });
+            setPets(response.data);
+        } catch (error) {
+            console.error('Ошибка при загрузке питомцев:', error);
+        }
+    };  
     
       useEffect(() => {
         if (user?.id) {
           fetchPosts();
+          fetchPets();
         }
       }, [user]);
     
-      const handlePostAdded = () => {
+    const handlePostAdded = () => {
         fetchPosts();  
-      };
+    };
+
+    const handlePetAdded = () => {
+        fetchPets();  
+    };
 
     return (
         <div className={styles.profile}>
@@ -71,8 +88,13 @@ const Profile = () => {
                     <span className={styles.editButtonText}>Редактировать</span>
                 </button>
             </div>
-            <PetList />
+            <PetList pets={pets} onAddPetClick={() => setIsAddPetModalOpen(true)} />
             <PostPreviewList posts={posts} />
+            <AddPetModal 
+                isOpen={isAddPetModalOpen}
+                onClose={() => setIsAddPetModalOpen(false)}
+                onPetAdded={handlePetAdded}
+            />
             <AddPostModal 
                 isOpen={isAddPostModalOpen} 
                 onClose={() => setIsAddPostModalOpen(false)}

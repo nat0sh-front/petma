@@ -12,6 +12,11 @@
         object-fit: cover;
     }
 
+    .petInfoWrapper {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
     .petInfo {
         display: flex;
         flex-direction: column;

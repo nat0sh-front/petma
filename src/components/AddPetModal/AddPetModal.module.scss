@@ -1,0 +1,134 @@
+@use '../../App.scss' as *;
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+
+    .modalContent {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        position: relative;
+        min-width: 200px;
+        max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .modalHeader {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+
+            h2 {
+                font-size: 1.5rem;
+            }
+    
+            .closeButton {
+                margin: 0;
+                padding: 0;
+                border: none;
+                background: none;
+                font-size: 30px;
+                cursor: pointer;
+                color: $text-color;
+            }
+    
+        }
+
+        .form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+
+            .avatar {
+                display: flex;
+                gap: 10px;
+
+                .avatarContent {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    .fileInput {
+                        height: 45px;
+                    }
+
+                    .preview {
+                        width: 75px;
+                        height: 75px;
+                        object-fit: cover;
+                        border-radius: 50%;
+                    }
+                }
+            }
+
+            .formInput {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .name, .type, .breed, .gender, .birthday, .bio {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 5px;
+            }
+
+            .bio {
+                align-items: flex-start;
+            }
+
+            input,
+            textarea,
+            select {
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            select {
+                width: 50%;
+            }
+
+            // .error {
+            //     border: 2px solid red;
+            // }
+
+            .saveButton {
+                margin-top: 10px;
+                padding: 10px;
+                border: none;
+                background: $primary-color;
+                color: $text-color;
+                cursor: pointer;
+                border-radius: 10px;
+                font-family: inherit;
+                font-size: inherit;
+
+                &:hover {
+                    background-color: $secondary-color;
+                    outline: 1px solid $primary-color;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
