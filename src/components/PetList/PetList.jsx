@@ -3,6 +3,7 @@ import React from 'react'
 import styles from './PetList.module.scss'
 import addIcon from '../../assets/icons/plus.svg'
 import Pet from '../Pet/Pet'
+import EmptyState from '../EmptyState/EmptyState'
 
 const PetList = ( {pets, onAddPetClick} ) => {
   return (
@@ -15,9 +16,13 @@ const PetList = ( {pets, onAddPetClick} ) => {
             </button>
         </div>
         <div className={styles.petsContent}>
-          {pets.map(pet => (
-            <Pet key={pet.id} pet={pet} />
-          ))}
+          {pets.length === 0 ? (
+            <EmptyState message="добавь своего хвостатого друга" />
+          ):(
+            pets.map(pet => (
+              <Pet key={pet.id} pet={pet} />
+            ))
+          )}
         </div>
     </div>
   )

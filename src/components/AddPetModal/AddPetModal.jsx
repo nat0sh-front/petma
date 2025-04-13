@@ -13,7 +13,6 @@ const AddPetModal = ({ isOpen, onClose, onPetAdded }) => {
     const [petGender, setPetGender] = useState("");
     const [petBirthday, setPetBirthday] = useState(0);
     const [petBio, setPetBio] = useState("");
-    const [errors, setErrors] = useState({});
 
     if (!isOpen) return null;
 
