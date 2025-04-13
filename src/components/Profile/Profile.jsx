@@ -3,7 +3,6 @@ import { AuthContext } from '../../context/AuthContext';
 
 import styles from './Profile.module.scss';
 
-import defaultBackground from '../../assets/images/background.jpg';
 import defaultAvatar from '../../assets/images/avatar.png';
 import addIcon from '../../assets/icons/plus.svg';
 import editIcon from '../../assets/icons/edit.svg';
@@ -12,7 +11,7 @@ import PetList from '../PetList/PetList';
 import PostPreviewList from '../PostPreviewList/PostPreviewList';
 import AddPostModal from '../AddPostModal/AddPostModal';
 import axios from 'axios';
-import AddPetModal from '../AddPetModal/AddPetModal';
+import PetModal from '../PetModal/PetModal';
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
@@ -88,12 +87,13 @@ const Profile = () => {
                     <span className={styles.editButtonText}>Редактировать</span>
                 </button>
             </div>
-            <PetList pets={pets} onAddPetClick={() => setIsAddPetModalOpen(true)} />
+            <PetList pets={pets} handlePetAdded={handlePetAdded} onAddPetClick={() => setIsAddPetModalOpen(true)} />
             <PostPreviewList posts={posts} />
-            <AddPetModal 
+            <PetModal 
                 isOpen={isAddPetModalOpen}
                 onClose={() => setIsAddPetModalOpen(false)}
                 onPetAdded={handlePetAdded}
+                editablePet={null}
             />
             <AddPostModal 
                 isOpen={isAddPostModalOpen} 

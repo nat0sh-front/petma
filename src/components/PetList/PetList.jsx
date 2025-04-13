@@ -5,7 +5,7 @@ import addIcon from '../../assets/icons/plus.svg'
 import Pet from '../Pet/Pet'
 import EmptyState from '../EmptyState/EmptyState'
 
-const PetList = ( {pets, onAddPetClick} ) => {
+const PetList = ( {pets, onAddPetClick, handlePetAdded} ) => {
   return (
     <div className={styles.pets}>
         <div className={styles.petsHeader}>
@@ -20,7 +20,7 @@ const PetList = ( {pets, onAddPetClick} ) => {
             <EmptyState message="добавь своего хвостатого друга" />
           ):(
             pets.map(pet => (
-              <Pet key={pet.id} pet={pet} />
+              <Pet key={pet.id} pet={pet} handlePetAdded={handlePetAdded} />
             ))
           )}
         </div>

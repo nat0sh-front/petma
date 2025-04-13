@@ -12,23 +12,43 @@
         object-fit: cover;
     }
 
-    .petInfoWrapper {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
     .petInfo {
         display: flex;
         flex-direction: column;
         gap: 10px;
 
-        .petName {
-            font-size: 1.2rem;
-            font-weight: 500;
+        .petHeader {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+
+            .petName {
+                font-size: 1.2rem;
+                font-weight: 500;
+            }
+
+            .petEditButton {
+                position: absolute;
+                right: 0;
+                top: 0;
+                border: none;
+                background-color: transparent;
+
+                .petEditIcon {
+                    transition: scale 0.3s ease;
+                }
+
+                &:hover {
+                    .petEditIcon {
+                        scale: 1.07;
+                    }
+                }
+            }
         }
 
-        .petInfoWrapper {
+        .petTags {
             display: flex;
+            flex-wrap: wrap;
             gap: 5px;
 
             span {

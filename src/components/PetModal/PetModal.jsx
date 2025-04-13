@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react'
-import styles from './AddPetModal.module.scss'
+import React, { useContext, useEffect, useState } from 'react'
+import styles from './PetModal.module.scss'
 import defaultAvatar from '../../assets/images/avatar.png';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 
-const AddPetModal = ({ isOpen, onClose, onPetAdded }) => {
+const PetModal = ({ isOpen, onClose, onPetAdded, editablePet }) => {
     const { user } = useContext(AuthContext);
     const [petImage, setPetImage] = useState("");
     const [petName, setPetName] = useState("");
@@ -13,6 +13,26 @@ const AddPetModal = ({ isOpen, onClose, onPetAdded }) => {
     const [petGender, setPetGender] = useState("");
     const [petBirthday, setPetBirthday] = useState(0);
     const [petBio, setPetBio] = useState("");
+
+    useEffect(() => {
+        if (editablePet) {
+          setPetImage(editablePet.image || "");
+          setPetName(editablePet.name || "");
+          setPetType(editablePet.type || "");
+          setPetBreed(editablePet.breed || "");
+          setPetGender(editablePet.gender || "");
+          setPetBirthday(editablePet.birthday || "");
+          setPetBio(editablePet.bio || "");
+        } else {
+          setPetImage("");
+          setPetName("");
+          setPetType("");
+          setPetBreed("");
+          setPetGender("");
+          setPetBirthday("");
+          setPetBio("");
+        }
+      }, [editablePet, isOpen]);
 
     if (!isOpen) return null;
 
@@ -56,18 +76,28 @@ const AddPetModal = ({ isOpen, onClose, onPetAdded }) => {
         e.preventDefault();
     
         const petAge = calculateAge(petBirthday);
+
+        const payload = {
+            ownerId: user.id,
+            image: petImage,
+            name: petName,
+            type: petType,
+            breed: petBreed || "Без породы",
+            gender: petGender,
+            age: petAge,
+            bio: petBio || "",
+            birthday: petBirthday,
+        };
     
         try {
-            const response = await axios.post('http://localhost:5000/pets', {
-                ownerId: user.id,
-                image: petImage, // Изображение
-                name: petName, // Имя питомца
-                type: petType, // Тип питомца
-                breed: petBreed || "Без породы", // Порода питомца (если пусто, устанавливаем 'Без породы')
-                gender: petGender, // Пол питомца
-                age: petAge, // Возраст питомца
-                bio: petBio || "", // Биография питомца (если пусто, будет пустое значение)
-            });
+            let response;
+            if (editablePet) {
+            // редактирование
+            response = await axios.put(`http://localhost:5000/pets/${editablePet.id}`, payload);
+            } else {
+            // добавление
+            response = await axios.post('http://localhost:5000/pets', payload);
+            }
             console.log('Питомец добавлен:', response.data);
             onPetAdded();
             onClose(); 
@@ -80,7 +110,7 @@ const AddPetModal = ({ isOpen, onClose, onPetAdded }) => {
     <div className={styles.modalOverlay} onClick={onClose}>
         <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
             <div className={styles.modalHeader}>
-                <h2>Добавить питомца</h2>
+                <h2>{editablePet ? "Редактировать питомца" : "Добавить питомца"}</h2>
                 <button className={styles.closeButton} onClick={onClose}>×</button>
             </div>
             <form className={styles.form} onSubmit={handlePetSubmit}>
@@ -96,11 +126,11 @@ const AddPetModal = ({ isOpen, onClose, onPetAdded }) => {
                 </div>
                 <div className={styles.name}>
                     <span className={styles.label}>Кличка:</span>
-                    <input type="text" name="petName" onChange={(e) => setPetName(e.target.value)}/>
+                    <input type="text" name="petName" value={petName} onChange={(e) => setPetName(e.target.value)}/>
                 </div>
                 <div className={styles.type}>
                     <span className={styles.label}>Тип питомца:</span>
-                    <select id="type" name="type" onChange={(e) => setPetType(e.target.value)}>
+                    <select id="type" name="type" value={petType} onChange={(e) => setPetType(e.target.value)}>
                         <option value="">Выберите тип</option>
                         <option value="Собака">Собака</option>
                         <option value="Кошка">Кошка</option>
@@ -112,11 +142,11 @@ const AddPetModal = ({ isOpen, onClose, onPetAdded }) => {
                 </div>
                 <div className={styles.breed}>
                     <span className={styles.label}>Порода питомца:</span>
-                    <input type="text" name="petBreed" onChange={(e) => setPetBreed(e.target.value)} />
+                    <input type="text" name="petBreed" value={petBreed} onChange={(e) => setPetBreed(e.target.value)} />
                 </div>
                 <div className={styles.gender}>
                     <span className={styles.label}>Пол питомца:</span>
-                    <select id="type" name="type" onChange={(e) => setPetGender(e.target.value)}>
+                    <select id="gender" name="gender" value={petGender} onChange={(e) => setPetGender(e.target.value)}>
                         <option value="">-</option>
                         <option value="Мальчик">Мальчик</option>
                         <option value="Девочка">Девочка</option>
@@ -124,11 +154,11 @@ const AddPetModal = ({ isOpen, onClose, onPetAdded }) => {
                 </div>
                 <div className={styles.birthday}>
                     <span className={styles.label}>День рождения:</span>
-                    <input type="text" name="petBirthday" placeholder='ДД.ММ.ГГГГ' onChange={(e) => setPetBirthday(e.target.value)} />
+                    <input type="text" name="petBirthday" value={petBirthday} placeholder='ДД.ММ.ГГГГ' onChange={(e) => setPetBirthday(e.target.value)} />
                 </div>
                 <div className={styles.bio}>
                     <span className={styles.label}>О питомце:</span>
-                    <textarea name="petBio" maxLength="150" onChange={(e) => setPetBio(e.target.value)} />
+                    <textarea name="petBio" value={petBio} maxLength="150" onChange={(e) => setPetBio(e.target.value)} />
                 </div>                    
                 <button type="submit" className={styles.saveButton}>Сохранить</button>
             </form>
@@ -137,4 +167,4 @@ const AddPetModal = ({ isOpen, onClose, onPetAdded }) => {
   )
 }
 
-export default AddPetModal
+export default PetModal
