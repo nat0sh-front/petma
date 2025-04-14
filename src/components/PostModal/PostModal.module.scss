@@ -1,0 +1,90 @@
+@use '../../App.scss' as *;
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+
+    .modalContent {
+        background: #fff;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin: 0 15%;
+        
+        .postImage {
+            aspect-ratio: 1/1;
+            overflow: hidden;
+
+            .previewPost {
+                // width: 100%;
+                // height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .postInfo {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+
+            .postHeader {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-bottom: 10px;
+                border-bottom: 1px solid $light-grey;
+
+                .postAuthor {
+                    display: flex;
+                    gap: 10px;
+
+                    .avatar {
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+                    
+                    .author {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-evenly;
+
+                        .location {
+                            font-size: 0.9rem;
+                            color: $grey;
+                        }
+                    }
+                }
+
+                .menuButton {
+                    border: none;
+                    background: none;
+                    cursor: pointer;
+
+                    .menuIcon {
+                        width: 20px;
+                        height: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
