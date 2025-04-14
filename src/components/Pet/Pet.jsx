@@ -18,7 +18,7 @@ const Pet = ({ pet, handlePetAdded }) => {
   return (
     <>
       <div className={styles.pet}>
-        <img className={styles.petAvatar} src={pet.image || defaultAvatar} alt="Pet" />
+        <img className={styles.petAvatar} width={80} height={80} src={pet.image || defaultAvatar} alt="Pet" />
         <div className={styles.petInfo}>
           <div className={styles.petHeader}>
             <span className={styles.petName}>{pet.name}</span>
