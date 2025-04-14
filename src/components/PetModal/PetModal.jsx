@@ -106,6 +106,19 @@ const PetModal = ({ isOpen, onClose, onPetAdded, editablePet }) => {
         }
     };
 
+    const handleDeletePet = async (id) => {
+        if (window.confirm("Вы уверены, что хотите удалить этого питомца?")) {
+            try {
+                await axios.delete(`http://localhost:5000/pets/${id}`);
+                console.log('Питомец удалён');
+                onPetAdded(); 
+                onClose();    
+            } catch (error) {
+                console.error('Ошибка при удалении питомца:', error);
+            }
+        }
+    };
+
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
         <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
@@ -159,8 +172,19 @@ const PetModal = ({ isOpen, onClose, onPetAdded, editablePet }) => {
                 <div className={styles.bio}>
                     <span className={styles.label}>О питомце:</span>
                     <textarea name="petBio" value={petBio} maxLength="150" onChange={(e) => setPetBio(e.target.value)} />
-                </div>                    
-                <button type="submit" className={styles.saveButton}>Сохранить</button>
+                </div>
+                <div className={styles.buttons}>
+                    {editablePet && (
+                        <button 
+                            type="button" 
+                            className={styles.deleteButton}
+                            onClick={() => handleDeletePet(editablePet.id)}
+                        >
+                            Удалить
+                        </button>
+                    )}                  
+                    <button type="submit" className={styles.saveButton}>Сохранить</button>
+                </div>
             </form>
         </div>
     </div>

@@ -66,7 +66,7 @@
             }
 
             .bioContainer {
-                overflow-wrap: break-word;
+                word-break: break-word;
             }
         }
     }
@@ -116,6 +116,10 @@
 
             &:hover {
                 outline: 1px solid $grey;
+            }
+            
+            .editIcon {
+                padding: 5px;
             }
         }
     }

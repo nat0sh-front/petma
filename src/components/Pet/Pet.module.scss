@@ -3,7 +3,7 @@
 .pet {
     display: flex;
     gap: 20px;
-    min-width: 350px;
+    max-width: 350px;
 
     .petAvatar {
         width: 80px;
@@ -57,6 +57,10 @@
                 border-radius: 20px;
                 padding: 5px 10px;
             }
+        }
+
+        .petBio {
+            word-break: break-word;
         }
     }
 }

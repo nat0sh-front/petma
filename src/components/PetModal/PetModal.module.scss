@@ -102,7 +102,32 @@
             //     border: 2px solid red;
             // }
 
+            .buttons {
+                display: flex;
+                gap: 10px;
+            }
+
+            .deleteButton {
+                width: 100%;
+                margin-top: 10px;
+                padding: 10px;
+                border: 1px solid red;
+                background-color: $light-grey;
+                color: red;
+                cursor: pointer;
+                border-radius: 10px;
+                font-family: inherit;
+                font-size: inherit;
+
+                &:hover {
+                    background-color: red;
+                    color: #fff;
+                    border: 1px solid red;
+                }
+            }
+
             .saveButton {
+                width: 100%;
                 margin-top: 10px;
                 padding: 10px;
                 border: none;
