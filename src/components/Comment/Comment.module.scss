@@ -1,0 +1,30 @@
+@use "../../App.scss" as *;
+
+.comment {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+
+    .commentHeader {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+            object-fit: cover;
+            border-radius: 50%;
+            aspect-ratio: 1/1;
+        }
+
+        .userName {
+            font-size: 0.9rem;
+        }
+    }
+
+    .commentText {
+        font-size: 0.8rem;
+    }
+}

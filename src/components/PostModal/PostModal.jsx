@@ -1,8 +1,12 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from './PostModal.module.scss'
 import defaultBackground from '../../assets/images/background.jpg';
 import defaultAvatar from '../../assets/images/avatar.png';
 import menu from '../../assets/icons/menu.svg';
+import like from '../../assets/icons/like.svg';
+import comment from '../../assets/icons/comment.svg';
+import plane from '../../assets/icons/plane.svg'
+import Comment from '../Comment/Comment';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 
@@ -50,6 +54,7 @@ const PostModal = ({ isOpen, onClose }) => {
 
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
+        <button className={styles.closeButton} onClick={onClose}>×</button>
         <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
             <div className={styles.postImage}>
                 <img 
@@ -75,7 +80,31 @@ const PostModal = ({ isOpen, onClose }) => {
                         <img className={styles.menuIcon} src={menu} alt="" />
                     </button>
                 </div>
-                
+                <div className={styles.postText}>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias odio suscipit veritatis doloremque? Consequuntur neque quidem ut provident, consequatur accusamus voluptates iste vitae, dignissimos excepturi, illo fuga cumque maxime deserunt?</p>
+                </div>
+                <div className={styles.commentList}>
+                    <Comment />
+                    <Comment />
+                    <Comment />
+                </div>
+                <div className={styles.postFooter}>
+                    <ul className={styles.postButtonList}>
+                        <li className={styles.postButtonItem}>
+                            <img className={styles.likeIcon} src={like} alt="" />
+                            <span className={styles.likeCount}>54</span>
+                        </li>
+                        <li className={styles.postButtonItem}>
+                            <img className={styles.commentIcon} src={comment} alt="" />
+                            <span className={styles.commentCount}>27</span>
+                        </li>
+                    </ul>
+                    <span className={styles.postTime}>19 ферваля 2025</span>
+                    <div className={styles.commentInputWrapper}>
+                        <input type="text" className={styles.commentInput} placeholder="Добавить комментарий..." />
+                        <button className={styles.commentButton}><img className={styles.commentButtonIcon} src={plane} alt="" /></button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

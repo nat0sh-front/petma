@@ -11,14 +11,30 @@
     justify-content: center;
     z-index: 3;
 
+    .closeButton {
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: none;
+        font-size: 30px;
+        cursor: pointer;
+        color: $white;
+        position: absolute;
+        top: 5px;
+        right: 8px;
+    }
+
     .modalContent {
         background: #fff;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        margin: 0 15%;
+        width: 80vw;
+        aspect-ratio: 2 / 1;
+        overflow: hidden;
         
         .postImage {
             aspect-ratio: 1/1;
+            width: 100%;
             overflow: hidden;
 
             .previewPost {
@@ -29,9 +45,10 @@
         }
 
         .postInfo {
-            display: flex;
-            flex-direction: column;
-            padding: 10px;
+            display: grid;
+            grid-template-rows: auto auto 1fr auto; // шапка, текст, комментарии, футер
+            height: 100%;
+            min-height: 0;
 
             .postHeader {
                 display: flex;
@@ -39,6 +56,7 @@
                 align-items: center;
                 padding-bottom: 10px;
                 border-bottom: 1px solid $light-grey;
+                padding: 10px;
 
                 .postAuthor {
                     display: flex;
@@ -71,6 +89,84 @@
                     .menuIcon {
                         width: 20px;
                         height: 20px;
+                    }
+                }
+            }
+
+            .postText {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            .commentList {
+                min-height: 0;
+                max-height: 100%;
+                overflow-y: auto;
+                scrollbar-width: none;          /* Firefox */
+                -ms-overflow-style: none;       /* IE и Edge */
+
+                &::-webkit-scrollbar {
+                    display: none;                  /* Chrome, Safari */
+                }
+            }
+
+            .postFooter {
+                margin-top: auto;
+                display: flex;
+                flex-direction: column;
+
+                .postButtonList {
+                    display: flex;
+                    gap: 20px;
+                    align-items: center;
+                    padding: 10px 10px 0;
+            
+                    .postButtonItem {
+                        display: flex;
+                        gap: 10px;
+            
+                        .postIcon {
+                            color: $text-color;
+                            width: 15px;
+                            height: 15px;
+                        }
+                    }
+                }
+            
+                .postTime {
+                    color: $grey;
+                    font-size: 0.9rem;
+                    padding: 5px 10px;
+                }
+    
+                .commentInputWrapper {
+                    display: flex;
+                    border-top: 1px solid $light-grey;
+                    padding: 10px;
+    
+                    .commentInput {
+                        width: 100%;
+                        border: none;
+                        padding: 5px 10px;
+                        font-size: 0.9rem;
+
+                        &:focus, &:focus-visible {
+                            outline: none;
+                        }
+                    }
+
+                    .commentButton {
+                        border: none;
+                        background: none;
+                        cursor: pointer;
+                        font-size: 0.9rem;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        &:focus, &:focus-visible {
+                            outline: none;
+                        }
                     }
                 }
             }
