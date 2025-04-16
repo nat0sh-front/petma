@@ -10,23 +10,24 @@ import Comment from '../Comment/Comment';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 
-const PostModal = ({ isOpen, onClose, post }) => {
+const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
     const { user } = useContext(AuthContext);
     const [users, setUsers] = useState([]);
-    const [newComment, setNewComment] = useState(''); 
-    const [comments, setComments] = useState(post.comments || []); 
     const [newCommentText, setNewCommentText] = useState('');
     const [currentPost, setCurrentPost] = useState(post);
+    const [isPostMenuOpen, setIsPostMenuOpen] = useState(false);
 
     useEffect(() => {
         if (isOpen) {
-            axios.get('http://localhost:5000/users')
-                .then(res => setUsers(res.data))
-                .catch(err => console.error('Ошибка при загрузке пользователей:', err));
-    
-            setCurrentPost(post); // обновить текущий пост
+          axios.get('http://localhost:5000/users')
+            .then(res => setUsers(res.data))
+            .catch(err => console.error('Ошибка при загрузке пользователей:', err));
         }
-    }, [isOpen, post]);
+      }, [isOpen]);
+      
+    useEffect(() => {
+    setCurrentPost(post);
+    }, [post]);
 
     const handleCommentSubmit = () => {
         if (newCommentText.trim() === '') return;
@@ -63,6 +64,19 @@ const PostModal = ({ isOpen, onClose, post }) => {
         });
     }
 
+    const handleDeletePost = async (id) => {
+        if (window.confirm("Вы уверены что хотите удалить данный пост?")) {
+            try {
+                await axios.delete(`http://localhost:5000/posts/${id}`);
+                console.log("Пост удалён");
+                onPostAdded(); 
+                onClose();
+            } catch (error) {
+                console.error('Ошибка при удалении поста:', error);
+            }
+        }
+    }
+
     const formattedDate = formatDate(post.createdAt);
 
     return (
@@ -89,9 +103,17 @@ const PostModal = ({ isOpen, onClose, post }) => {
                             <span className={styles.location}>{post.location || ""}</span>
                         </div>
                     </div>
-                    <button className={styles.menuButton}>
+                    <button className={`${styles.menuButton} ${isPostMenuOpen ? styles.active : ''}`} onClick={() => setIsPostMenuOpen(!isPostMenuOpen)}>
                         <img className={styles.menuIcon} src={menu} alt="" />
                     </button>
+                    {isPostMenuOpen && (
+                        <div className={styles.menuContent}>
+                            <button className={styles.deletePostButton} onClick={() => handleDeletePost(post.id)}>
+                                <span>Удалить</span>
+                                
+                            </button>
+                        </div>
+                    )}
                 </div>
                 <div className={styles.postText}>
                     <p>{post.text}</p>

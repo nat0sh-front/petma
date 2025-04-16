@@ -57,6 +57,7 @@
                 align-items: center;
                 padding-bottom: 10px;
                 padding: 10px;
+                position: relative;
 
                 .postAuthor {
                     display: flex;
@@ -95,6 +96,41 @@
                         height: 20px;
                     }
                 }
+
+                .menuContent {
+                    position: absolute;
+                    bottom: -30px;
+                    right: 10px;
+                    z-index: 100;
+                    background-color: $white;
+                    border-radius: 10px;
+                    box-shadow: 
+                        0 4px 8px rgba(0, 0, 0, 0.1), /* Нижняя тень */
+                        // 4px 0 8px rgba(0, 0, 0, 0.1); /* Правая тень */
+                        -4px 0 8px rgba(0, 0, 0, 0.1); /* Левая тень */
+                        // 0 -4px 8px rgba(0, 0, 0, 0.1); /* Верхняя тень */
+
+                    .deletePostButton {
+                        border: none;
+                        background-color: transparent;
+                        cursor: pointer;
+                        color: $text-color;
+                        font-family: inherit;
+                        padding: 10px 20px;
+                        width: 100%;
+                        height: 100%;
+                        transition: all 0.3s ease;
+
+                        &:hover {
+                            background-color: $light-grey;
+                        }
+
+                        span {
+                            color: red;
+                            font-size: 1rem;
+                        }
+                    }
+                }
             }
 
             .postText {
@@ -109,7 +145,7 @@
                 padding: 10px;
 
                 &::-webkit-scrollbar {
-                    display: none;                  /* Chrome, Safari */
+                    display: none;
                 }
             }
 

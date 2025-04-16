@@ -3,7 +3,7 @@ import styles from './PostPreviewList.module.scss'
 import PostPreview from '../PostPreview/PostPreview'
 import EmptyState from '../EmptyState/EmptyState'
 
-const PostPreviewList = ({ posts }) => {
+const PostPreviewList = ({ posts, handlePostAdded }) => {
 
   return (
     <div className={styles.postsPreviewList}>
@@ -13,7 +13,7 @@ const PostPreviewList = ({ posts }) => {
             <EmptyState message="тут скоро будут милые фотки" />
           ) : (
             posts.map(post => (
-              <PostPreview key={post.id} post={post} />
+              <PostPreview key={post.id} post={post} handlePostAdded={handlePostAdded} />
             ))
           )}
         </div>

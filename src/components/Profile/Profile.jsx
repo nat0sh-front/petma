@@ -88,7 +88,7 @@ const Profile = () => {
                 </button>
             </div>
             <PetList pets={pets} handlePetAdded={handlePetAdded} onAddPetClick={() => setIsAddPetModalOpen(true)} />
-            <PostPreviewList posts={posts} />
+            <PostPreviewList posts={posts} handlePostAdded={handlePostAdded} />
             <PetModal 
                 isOpen={isAddPetModalOpen}
                 onClose={() => setIsAddPetModalOpen(false)}

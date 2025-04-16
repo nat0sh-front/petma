@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from './PostPreview.module.scss'
 import PostModal from '../PostModal/PostModal';
 
-const PostPreview = ({ post }) => {
+const PostPreview = ({ post, handlePostAdded }) => {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
   if (!post.image) {
@@ -21,6 +21,7 @@ const PostPreview = ({ post }) => {
     <PostModal 
       isOpen={isPostModalOpen} 
       onClose={() => setIsPostModalOpen(false)}
+      onPostAdded={handlePostAdded}
       post = {post}
     />
   </>
