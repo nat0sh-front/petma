@@ -13,7 +13,7 @@ const PostPreviewList = ({ posts }) => {
             <EmptyState message="тут скоро будут милые фотки" />
           ) : (
             posts.map(post => (
-              <PostPreview key={post.id} image={post.image} />
+              <PostPreview key={post.id} post={post} />
             ))
           )}
         </div>

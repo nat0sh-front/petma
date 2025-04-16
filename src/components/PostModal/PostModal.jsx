@@ -10,55 +10,68 @@ import Comment from '../Comment/Comment';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 
-const PostModal = ({ isOpen, onClose }) => {
-    // const { user } = useContext(AuthContext);
-    // const [postImage, setPostImage] = useState("");
-    // const [postText, setPostText] = useState("");
-    // const [postLocation, setPostLocation] = useState("");
+const PostModal = ({ isOpen, onClose, post }) => {
+    const { user } = useContext(AuthContext);
+    const [users, setUsers] = useState([]);
+    const [newComment, setNewComment] = useState(''); 
+    const [comments, setComments] = useState(post.comments || []); 
+    const [newCommentText, setNewCommentText] = useState('');
+    const [currentPost, setCurrentPost] = useState(post);
 
-    if (!isOpen) return null;
-
-    // const handleImageUpload = (e) => {
-    //     const file = e.target.files[0];
-    //     if (file) {
-    //         const reader = new FileReader();
-    //         reader.onloadend = () => {
-    //             setPostImage(reader.result);
-    //         };
-    //         reader.readAsDataURL(file);
-    //     }
-    // }
-
-    // const handlePostSubmit = async (e) => {
-    //     e.preventDefault();
+    useEffect(() => {
+        if (isOpen) {
+            axios.get('http://localhost:5000/users')
+                .then(res => setUsers(res.data))
+                .catch(err => console.error('Ошибка при загрузке пользователей:', err));
     
-    //     try {
-    //         const postTime = new Date().toISOString();
+            setCurrentPost(post); // обновить текущий пост
+        }
+    }, [isOpen, post]);
 
-    //         const response = await axios.post('http://localhost:5000/posts', {
-    //             userId: user.id,
-    //             image: postImage, // Изображение
-    //             text: postText, // Текст поста
-    //             location: postLocation || '', // Местоположение (необязательно)
-    //             createdAt: postTime, // Дата создания
-    //             likes: 0, // Количество лайков
-    //             comments: [], // Комментарии (пустой массив)
-    //         });
-    //         console.log('Пост добавлен:', response.data);
-    //         onPostAdded();
-    //         onClose(); 
-    //     } catch (error) {
-    //         console.error('Ошибка при добавлении поста:', error);
-    //     }
-    // };
+    const handleCommentSubmit = () => {
+        if (newCommentText.trim() === '') return;
+    
+        const newComment = {
+            id: Date.now().toString(),
+            authorId: user.id,
+            text: newCommentText,
+            createdAt: new Date().toISOString(),
+        };
+    
+        const updatedComments = [...(currentPost.comments || []), newComment];
+    
+        axios.patch(`http://localhost:5000/posts/${post.id}`, {
+            comments: updatedComments
+        })
+        .then(res => {
+            setCurrentPost(res.data); 
+            setNewCommentText('');
+        })
+        .catch(err => {
+            console.error("Ошибка при добавлении комментария:", err);
+        });
+    };
 
-  return (
+    if (!isOpen || !post) return null;
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString("ru-RU", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        });
+    }
+
+    const formattedDate = formatDate(post.createdAt);
+
+    return (
     <div className={styles.modalOverlay} onClick={onClose}>
         <button className={styles.closeButton} onClick={onClose}>×</button>
         <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
             <div className={styles.postImage}>
                 <img 
-                    src={defaultBackground}
+                    src={post.image || defaultBackground}
                     alt="Post Image"
                     className={styles.previewPost} 
                 />
@@ -68,12 +81,12 @@ const PostModal = ({ isOpen, onClose }) => {
                     <div className={styles.postAuthor}>
                         <img 
                             className={styles.avatar} 
-                            src={defaultAvatar} 
+                            src={user.avatar || defaultAvatar} 
                             alt="Avatar" 
                         />
                         <div className={styles.author}>
-                            <span className={styles.name}>Натали Гвоздь</span>
-                            <span className={styles.location}>Almaty</span>
+                            <span className={styles.name}>{user.name} {user.surname}</span>
+                            <span className={styles.location}>{post.location || ""}</span>
                         </div>
                     </div>
                     <button className={styles.menuButton}>
@@ -81,28 +94,36 @@ const PostModal = ({ isOpen, onClose }) => {
                     </button>
                 </div>
                 <div className={styles.postText}>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias odio suscipit veritatis doloremque? Consequuntur neque quidem ut provident, consequatur accusamus voluptates iste vitae, dignissimos excepturi, illo fuga cumque maxime deserunt?</p>
+                    <p>{post.text}</p>
                 </div>
                 <div className={styles.commentList}>
-                    <Comment />
-                    <Comment />
-                    <Comment />
+                {(currentPost.comments || []).map(comment => {
+                    const commentAuthor = users.find(user => user.id === comment.authorId);
+                    return (
+                        <Comment 
+                            key={comment.id} 
+                            comment={comment} 
+                            author={commentAuthor} 
+                            formatDate={formatDate}
+                        />
+                    );
+                })}
                 </div>
                 <div className={styles.postFooter}>
                     <ul className={styles.postButtonList}>
                         <li className={styles.postButtonItem}>
                             <img className={styles.likeIcon} src={like} alt="" />
-                            <span className={styles.likeCount}>54</span>
+                            <span className={styles.likeCount}>{post.likes}</span>
                         </li>
                         <li className={styles.postButtonItem}>
                             <img className={styles.commentIcon} src={comment} alt="" />
-                            <span className={styles.commentCount}>27</span>
+                            <span className={styles.commentCount}>{(currentPost.comments || []).length}</span>
                         </li>
                     </ul>
-                    <span className={styles.postTime}>19 ферваля 2025</span>
+                    <span className={styles.postTime}>{formattedDate}</span>
                     <div className={styles.commentInputWrapper}>
-                        <input type="text" className={styles.commentInput} placeholder="Добавить комментарий..." />
-                        <button className={styles.commentButton}><img className={styles.commentButtonIcon} src={plane} alt="" /></button>
+                        <input type="text" className={styles.commentInput} placeholder="Добавить комментарий..." value={newCommentText} onChange={(e) => setNewCommentText(e.target.value)} />
+                        <button className={styles.commentButton} onClick={handleCommentSubmit}><img className={styles.commentButtonIcon} src={plane} alt="" /></button>
                     </div>
                 </div>
             </div>

@@ -8,23 +8,35 @@
 
     .commentHeader {
         display: flex;
-        align-items: center;
-        gap: 10px;
+        justify-content: space-between;
 
-        .avatar {
-            width: 35px;
-            height: 35px;
-            object-fit: cover;
-            border-radius: 50%;
-            aspect-ratio: 1/1;
+        .commentAuthor {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .avatar {
+                width: 35px;
+                height: 35px;
+                object-fit: cover;
+                border-radius: 50%;
+                aspect-ratio: 1/1;
+            }
+    
+            .userName {
+                font-size: 0.9rem;
+            }
         }
 
-        .userName {
-            font-size: 0.9rem;
+        .commentTime {
+            font-size: 0.7rem;
+            color: $grey;
         }
+
+        
     }
 
     .commentText {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
 }

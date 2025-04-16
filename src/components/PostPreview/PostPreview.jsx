@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import styles from './PostPreview.module.scss'
 import PostModal from '../PostModal/PostModal';
 
-const PostPreview = ({ image }) => {
+const PostPreview = ({ post }) => {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
-  if (!image) {
+  if (!post.image) {
     return null;  
   }
 
@@ -16,11 +16,12 @@ const PostPreview = ({ image }) => {
   return (
   <>
     <button className={styles.postPreview} onClick={handleModalOpen}>
-        <img className={styles.postImage} src={image} alt="Post Image" />
+        <img className={styles.postImage} src={post.image} alt="Post Image" />
     </button>
     <PostModal 
       isOpen={isPostModalOpen} 
       onClose={() => setIsPostModalOpen(false)}
+      post = {post}
     />
   </>
   )
