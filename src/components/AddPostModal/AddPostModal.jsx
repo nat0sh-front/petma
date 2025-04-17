@@ -12,6 +12,15 @@ const AddPostModal = ({ isOpen, onClose, onPostAdded }) => {
 
     if (!isOpen) return null;
 
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString("ru-RU", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        });
+    }
+
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -27,7 +36,7 @@ const AddPostModal = ({ isOpen, onClose, onPostAdded }) => {
         e.preventDefault();
     
         try {
-            const postTime = new Date().toISOString();
+            const postTime = formatDate(new Date().toISOString());
 
             const response = await axios.post('http://localhost:5000/posts', {
                 userId: user.id,
@@ -35,7 +44,7 @@ const AddPostModal = ({ isOpen, onClose, onPostAdded }) => {
                 text: postText, // Текст поста
                 location: postLocation || '', // Местоположение (необязательно)
                 createdAt: postTime, // Дата создания
-                likes: 0, // Количество лайков
+                likedBy: [], // Количество лайков
                 comments: [], // Комментарии (пустой массив)
             });
             console.log('Пост добавлен:', response.data);

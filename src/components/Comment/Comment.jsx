@@ -3,7 +3,7 @@ import styles from "./Comment.module.scss";
 import defaultAvatar from "../../assets/images/avatar.png";
 import { AuthContext } from "../../context/AuthContext";
 
-const Comment = ({ comment, author, formattedDate, onDelete }) => {
+const Comment = ({ comment, author, onDelete }) => {
   const {user} = useContext(AuthContext);
 
   const isAuthor = user?.id === comment.authorId;
@@ -24,7 +24,7 @@ const Comment = ({ comment, author, formattedDate, onDelete }) => {
           </span>
         </div>
         <span className={styles.commentTime}>
-          {formattedDate}
+          {comment.createdAt}
         </span>
       </div>
       <div className={styles.commentContent}>

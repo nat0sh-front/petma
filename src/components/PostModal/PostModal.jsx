@@ -36,6 +36,15 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
 
     if (!isOpen || !post) return null;
 
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString("ru-RU", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        });
+    }
+
     const handleCommentSubmit = () => {
         if (newCommentText.trim() === '') return;
     
@@ -43,7 +52,7 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
             id: Date.now().toString(),
             authorId: user.id,
             text: newCommentText,
-            createdAt: new Date().toISOString(),
+            createdAt: formatDate(new Date().toISOString()),
         };
     
         const updatedComments = [...(currentPost.comments || []), newComment];
@@ -92,17 +101,6 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
         }
     }
 
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleDateString("ru-RU", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-        });
-    }
-
-    const formattedDate = formatDate(post.createdAt);
-
     const handleLikeToggle = () => {
         const userId = user.id;
         const alreadyLiked = currentPost.likedBy?.includes(userId);
@@ -122,8 +120,6 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
         })
         .catch(err => console.error("Ошибка при обновлении лайков:", err));
     };       
-
-    console.log(isLiked);
 
     return (
     <div className={styles.modalOverlay} onClick={onClose}>
@@ -172,7 +168,6 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
                             key={comment.id} 
                             comment={comment} 
                             author={commentAuthor} 
-                            formattedDate={formattedDate}
                             onDelete={() => handleCommentDelete(comment.id)}
                         />
                     );
@@ -201,7 +196,7 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
                             <span className={styles.commentCount}>{(currentPost.comments || []).length}</span>
                         </li>
                     </ul>
-                    <span className={styles.postTime}>{formattedDate}</span>
+                    <span className={styles.postTime}>{post.createdAt}</span>
                     <div className={styles.commentInputWrapper}>
                         <input type="text" className={styles.commentInput} placeholder="Добавить комментарий..." value={newCommentText} onChange={(e) => setNewCommentText(e.target.value)} />
                         <button className={styles.commentButton} onClick={handleCommentSubmit}><img className={styles.commentButtonIcon} src={plane} alt="" /></button>
