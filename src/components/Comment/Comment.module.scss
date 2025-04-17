@@ -36,7 +36,26 @@
         
     }
 
-    .commentText {
-        font-size: 0.9rem;
+    .commentContent {
+        display: flex;
+        justify-content: space-between;
+
+        .commentText {
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .commentIcon {
+            width: 15px;
+            height: 15px;
+            color: $grey;
+            cursor: pointer;
+
+            &:hover {
+                color: darken($grey, 10%);
+                scale: 1.05;
+            }
+        }
     }
+    
 }

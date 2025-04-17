@@ -34,6 +34,8 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
         setIsLiked( currentPost.likedBy?.includes(user.id) || false );
     }, [currentPost, user.id]);
 
+    if (!isOpen || !post) return null;
+
     const handleCommentSubmit = () => {
         if (newCommentText.trim() === '') return;
     
@@ -58,18 +60,26 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
         });
     };
 
-    if (!isOpen || !post) return null;
+    const handleCommentDelete = async (commentId) => {
+        if (window.confirm("Вы уверены, что хотите удалить этот комментарий?")) {
+            try {
+                const updatedComments = currentPost.comments.filter(
+                    (comment) => comment.id !== commentId
+                );
+    
+                const response = await axios.patch(`http://localhost:5000/posts/${currentPost.id}`, {
+                    comments: updatedComments,
+                });
+    
+                setCurrentPost(response.data);
+                console.log("Комментарий удалён");
+            } catch (error) {
+                console.error("Ошибка при удалении комментария:", error);
+            }
+        }
+    };
 
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleDateString("ru-RU", {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-        });
-    }
-
-    const handleDeletePost = async (id) => {
+    const handlePostDelete = async (id) => {
         if (window.confirm("Вы уверены что хотите удалить данный пост?")) {
             try {
                 await axios.delete(`http://localhost:5000/posts/${id}`);
@@ -80,6 +90,15 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
                 console.error('Ошибка при удалении поста:', error);
             }
         }
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString("ru-RU", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        });
     }
 
     const formattedDate = formatDate(post.createdAt);
@@ -135,7 +154,7 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
                     </button>
                     {isPostMenuOpen && (
                         <div className={styles.menuContent}>
-                            <button className={styles.deletePostButton} onClick={() => handleDeletePost(post.id)}>
+                            <button className={styles.deletePostButton} onClick={() => handlePostDelete(post.id)}>
                                 <span>Удалить</span>
                                 
                             </button>
@@ -153,7 +172,8 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
                             key={comment.id} 
                             comment={comment} 
                             author={commentAuthor} 
-                            formatDate={formatDate}
+                            formattedDate={formattedDate}
+                            onDelete={() => handleCommentDelete(comment.id)}
                         />
                     );
                 })}
