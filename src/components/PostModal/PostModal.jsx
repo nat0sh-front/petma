@@ -16,6 +16,7 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
     const [newCommentText, setNewCommentText] = useState('');
     const [currentPost, setCurrentPost] = useState(post);
     const [isPostMenuOpen, setIsPostMenuOpen] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
 
     useEffect(() => {
         if (isOpen) {
@@ -26,8 +27,12 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
       }, [isOpen]);
       
     useEffect(() => {
-    setCurrentPost(post);
+        setCurrentPost(post);
     }, [post]);
+
+    useEffect(() => {
+        setIsLiked( currentPost.likedBy?.includes(user.id) || false );
+    }, [currentPost, user.id]);
 
     const handleCommentSubmit = () => {
         if (newCommentText.trim() === '') return;
@@ -78,6 +83,28 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
     }
 
     const formattedDate = formatDate(post.createdAt);
+
+    const handleLikeToggle = () => {
+        const userId = user.id;
+        const alreadyLiked = currentPost.likedBy?.includes(userId);
+        
+        // собираем новый массив лайкнувших
+        const updatedLikedBy = alreadyLiked
+            ? currentPost.likedBy.filter(id => id !== userId)
+            : [...(currentPost.likedBy || []), userId];
+        
+        // шлём на сервер только массив likedBy
+        axios.patch(`http://localhost:5000/posts/${currentPost.id}`, {
+            likedBy: updatedLikedBy
+        })
+        .then(res => {
+            setCurrentPost(res.data);            // обновляем локальный пост
+            setIsLiked(!alreadyLiked);           // и сразу обновляем флаг
+        })
+        .catch(err => console.error("Ошибка при обновлении лайков:", err));
+    };       
+
+    console.log(isLiked);
 
     return (
     <div className={styles.modalOverlay} onClick={onClose}>
@@ -133,9 +160,21 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
                 </div>
                 <div className={styles.postFooter}>
                     <ul className={styles.postButtonList}>
-                        <li className={styles.postButtonItem}>
-                            <img className={styles.likeIcon} src={like} alt="" />
-                            <span className={styles.likeCount}>{post.likes}</span>
+                        <li className={styles.postButtonItem} onClick={handleLikeToggle}>
+                            <svg
+                                width="18"
+                                height="17"
+                                viewBox="0 0 18 17"
+                                fill={isLiked ? "red" : "none"}
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M8.46111 2.11685L9 2.67356L9.53888 2.11685C11.303 0.294382 14.1528 0.294382 15.917 2.11685C17.6943 3.95302 17.6943 6.93981 15.917 8.77597L9.17963 15.7361C9.08138 15.8376 8.91862 15.8376 8.82037 15.7361L2.08304 8.77597C0.305653 6.93981 0.305653 3.95302 2.08304 2.11685C3.84718 0.294382 6.69698 0.294382 8.46111 2.11685Z"
+                                    stroke={isLiked ? "red" : "currentColor"}
+                                    strokeWidth="1.5"
+                                />
+                            </svg>
+                            <span className={styles.likeCount}>{currentPost.likedBy?.length || 0}</span>
                         </li>
                         <li className={styles.postButtonItem}>
                             <img className={styles.commentIcon} src={comment} alt="" />
