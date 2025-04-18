@@ -12,7 +12,7 @@ const Post = ({ post, user }) => {
         <div className={styles.postTitle}>
             <img className={styles.avatar} src={user.avatar || defaultAvatar} alt="" />
             <div className={styles.postAuthor}>
-            <Link className={styles.linkProfile} to="/profile">
+            <Link className={styles.linkProfile} to={`/profile/${user.id}`}>
                 <span className={styles.name}>{user.name} {user.surname}</span>
                 <span className={styles.username}>{post.location}</span>
             </Link>

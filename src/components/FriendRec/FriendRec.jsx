@@ -1,40 +1,26 @@
 import React from 'react';
 import styles from './FriendRec.module.scss';
 import plus from '../../assets/icons/plus.svg';
-import avatar from '../../assets/images/avatar.png';
+import defaultAvatar from '../../assets/images/avatar.png';
 
-const FriendRec = () => {
-  const friends = [
-    {
-        id: 1,
-        name: 'Тлек Болатов',
-        bio: 'Разводчик собак',
-        avatar: avatar
-    },
-    {
-        id: 2,
-        name: 'Інжу Сұңқарқызы',
-        bio: 'Люблю кошек',
-        avatar: avatar
-    }
-  ];
+const FriendRec = ({ user }) => {
 
   return (
     <div className={styles.friendRec}>
-      {friends.map((friend) => (
-        <div key={friend.id} className={styles.friendHeader}>
-          <div className={styles.friendInfo}>
-            <img className={styles.avatar} src={friend.avatar} alt={friend.name} />
-            <div className={styles.friendText}>
-              <div className={styles.name}>{friend.name}</div>
-              <div className={styles.bio}>{friend.bio}</div>
-            </div>
+      <div className={styles.friendHeader}>
+        <div className={styles.friendInfo}>
+          <img className={styles.avatar} src={user?.avatar || defaultAvatar} alt='avatar' />
+          <div className={styles.friendText}>
+            <div className={styles.name}>{user.name} {user.surname}</div>
+            {/* <div className={styles.bio}>{user.bio}</div> */}
           </div>
-          <button className={styles.addButton}>
-            <img className={styles.addIcon} src={plus} alt="Add friend" />
-          </button>
         </div>
-      ))}
+        <button className={styles.addButton}>
+          <svg className={styles.addIcon} width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 1V10M10 10V19M10 10H1M10 10H19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
+        </button>
+      </div>
     </div>
   );
 };

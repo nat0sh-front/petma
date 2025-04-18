@@ -13,10 +13,11 @@ import settings from "../../assets/icons/settings.svg";
 const Sidebar = () => {
   const navigate = useNavigate(); 
   const location = useLocation(); 
+  const userId = JSON.parse(localStorage.getItem("userId"));
 
   const menuItems = [
     { path: "/dashboard", icon: home, label: "Главная" },
-    { path: "/profile", icon: profile, label: "Профиль" },
+    { path: `/profile/${userId}`, icon: profile, label: "Профиль" },
     { path: "/chat", icon: chat, label: "Чат" },
     { path: "/store", icon: service, label: "Услуги" },
     { path: "/zootaxi", icon: zootaxi, label: "ZooТакси" },

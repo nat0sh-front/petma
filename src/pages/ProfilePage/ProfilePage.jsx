@@ -1,8 +1,8 @@
 import React from 'react'
 import styles from './ProfilePage.module.scss'
-import ProfileLayout from '../../layouts/ProfileLayout/ProfileLayout'
 import Header from '../../components/Header/Header'
 import Sidebar from '../../components/Sidebar/Sidebar'
+import ProfileLayout from '../../layouts/ProfileLayout/ProfileLayout'
 
 const ProfilePage = () => {
   return (

@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
             if (userData) {
                 setUser(userData);
                 localStorage.setItem("userId", userData.id); // сохраняем только id
-                window.location.href = "/profile";
+                window.location.href = `/profile/${userData.id}`;
             } else {
                 alert("Неправильный логин или пароль");
             }

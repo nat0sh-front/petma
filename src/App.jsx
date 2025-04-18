@@ -8,13 +8,15 @@ import RegisterPage from './pages/RegisterPage/RegisterPage'
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 const App = () => {
+  const userId = JSON.parse(localStorage.getItem("userId"));
+
   return (
       <Router>
         <Routes>
           <Route path="/dashboard" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path='/register' element={<RegisterPage />} />
-          <Route path='/profile' element={<ProfilePage />} />
+          <Route path="/profile/:id" element={<ProfilePage />} />
         </Routes>
       </Router>
   )
