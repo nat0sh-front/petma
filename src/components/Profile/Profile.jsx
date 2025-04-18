@@ -15,6 +15,7 @@ import PetModal from '../PetModal/PetModal';
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
+
     const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
     const [isAddPostModalOpen, setIsAddPostModalOpen] = useState(false);
     const [isAddPetModalOpen, setIsAddPetModalOpen] = useState(false);
@@ -55,6 +56,29 @@ const Profile = () => {
         fetchPets();  
     };
 
+    const getWordForm = (count, forms) => {
+        const lastDigit = count % 10;
+        const lastTwoDigits = count % 100;
+      
+        if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+          return `${count} ${forms[2]}`; // множественное число (5+)
+        }
+      
+        if (lastDigit === 1) {
+          return `${count} ${forms[0]}`; // единственное число (1)
+        }
+      
+        if (lastDigit >= 2 && lastDigit <= 4) {
+          return `${count} ${forms[1]}`; // родительный (2-4)
+        }
+      
+        return `${count} ${forms[2]}`; // множественное число (5+)
+      }
+
+      const petCountText = getWordForm(pets.length, ['питомец', 'питомца', 'питомцев']);
+      const followerCountText = getWordForm(0, ['подписчик', 'подписчика', 'подписчиков']);
+      const followingCountText = getWordForm(0, ['подписка', 'подписки', 'подписок']);
+
     return (
         <div className={styles.profile}>
             <header className={styles.header}>
@@ -66,9 +90,9 @@ const Profile = () => {
                         </span>
                     </div>
                     <div className={styles.countContainer}>
-                        <span className={styles.petCount}>0 питомцев</span>
-                        <span className={styles.followingCount}>0 подписчиков</span>
-                        <span className={styles.followerCount}>0 подписок</span>
+                        <span className={styles.petCount}>{petCountText}</span>
+                        <span className={styles.followingCount}>{followingCountText}</span>
+                        <span className={styles.followerCount}>{followerCountText}</span>
                     </div>
                     <div className={styles.bioContainer}>
                         <span className={styles.bio}>
