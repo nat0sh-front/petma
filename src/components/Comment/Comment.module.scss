@@ -53,7 +53,7 @@
             cursor: pointer;
 
             &:hover {
-                color: darken($grey, 10%);
+                color: $grey;
                 scale: 1.05;
             }
         }

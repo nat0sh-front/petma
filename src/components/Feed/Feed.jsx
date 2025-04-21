@@ -26,10 +26,12 @@ const Feed = () => {
   return (
     <div className={styles.feed}>
       {posts.map(post => {
-        const user = users.find(u => u.id === post.userId);
+        const user = users.find(user => user.id === post.authorId);
         return (
           <React.Fragment key={post.id}>
-            <Post post={post} user={user} />
+            <Post post={post} user={user} onUpdatePost={(updatedPost) => {
+              setPosts(posts.map(post => post.id === updatedPost.id ? updatedPost : post));
+            }} />
             <hr className={styles.postHR} />
           </React.Fragment>
         );

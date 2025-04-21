@@ -25,7 +25,7 @@ const Profile = () => {
 
     const fetchPosts = async () => {
         try {
-          const response = await axios.get('http://localhost:5000/posts', { params: { userId: user?.id } });
+          const response = await axios.get('http://localhost:5000/posts', { params: { authorId: user?.id } });
           setPosts(response.data);
         } catch (error) {
           console.error('Ошибка при загрузке постов:', error);

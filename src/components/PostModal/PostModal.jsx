@@ -17,6 +17,14 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
     const [currentPost, setCurrentPost] = useState(post);
     const [isPostMenuOpen, setIsPostMenuOpen] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
+    const [author, setAuthor] = useState(null);
+
+    useEffect(() => {
+        if (users.length > 0 && post?.authorId) {
+            const foundAuthor = users.find(user => user.id === post.authorId);
+            setAuthor(foundAuthor);
+        }
+    }, [users, post]);
 
     useEffect(() => {
         if (isOpen) {
@@ -31,8 +39,8 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
     }, [post]);
 
     useEffect(() => {
-        setIsLiked( currentPost.likedBy?.includes(user.id) || false );
-    }, [currentPost, user.id]);
+        setIsLiked( currentPost.likedBy?.includes(user?.id) || false );
+    }, [currentPost, user?.id]);
 
     if (!isOpen || !post) return null;
 
@@ -104,19 +112,17 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
     const handleLikeToggle = () => {
         const userId = user.id;
         const alreadyLiked = currentPost.likedBy?.includes(userId);
-        
-        // собираем новый массив лайкнувших
+
         const updatedLikedBy = alreadyLiked
             ? currentPost.likedBy.filter(id => id !== userId)
             : [...(currentPost.likedBy || []), userId];
         
-        // шлём на сервер только массив likedBy
         axios.patch(`http://localhost:5000/posts/${currentPost.id}`, {
             likedBy: updatedLikedBy
         })
         .then(res => {
-            setCurrentPost(res.data);            // обновляем локальный пост
-            setIsLiked(!alreadyLiked);           // и сразу обновляем флаг
+            setCurrentPost(res.data);           
+            setIsLiked(!alreadyLiked); 
         })
         .catch(err => console.error("Ошибка при обновлении лайков:", err));
     };       
@@ -137,14 +143,16 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
                     <div className={styles.postAuthor}>
                         <img 
                             className={styles.avatar} 
-                            src={user.avatar || defaultAvatar} 
+                            src={author?.avatar || defaultAvatar} 
                             alt="Avatar" 
                         />
                         <div className={styles.author}>
-                            <span className={styles.name}>{user.name} {user.surname}</span>
+                            <span className={styles.name}>{author?.name} {author?.surname}</span>
                             <span className={styles.location}>{post.location || ""}</span>
                         </div>
                     </div>
+                    {user.id === post.authorId && (
+                    <>
                     <button className={`${styles.menuButton} ${isPostMenuOpen ? styles.active : ''}`} onClick={() => setIsPostMenuOpen(!isPostMenuOpen)}>
                         <img className={styles.menuIcon} src={menu} alt="" />
                     </button>
@@ -152,9 +160,10 @@ const PostModal = ({ isOpen, onClose, onPostAdded, post }) => {
                         <div className={styles.menuContent}>
                             <button className={styles.deletePostButton} onClick={() => handlePostDelete(post.id)}>
                                 <span>Удалить</span>
-                                
                             </button>
                         </div>
+                    )}
+                    </>
                     )}
                 </div>
                 <div className={styles.postText}>
