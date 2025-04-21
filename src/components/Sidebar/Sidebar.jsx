@@ -21,9 +21,8 @@ const Sidebar = () => {
     { path: `/profile/${userId}`, icon: profile, label: "Профиль" },
     { path: "/chat", icon: chat, label: "Чат" },
     { path: "/events", icon: events, label: "События" },
-    { path: "/store", icon: service, label: "Услуги" },
-    { path: "/zootaxi", icon: zootaxi, label: "ZooТакси" },
-    { path: "/login", icon: settings, label: "Настройки" },
+    { path: "/services", icon: service, label: "Услуги" },
+    { path: "/zootaxi", icon: zootaxi, label: "ZooТакси" }
   ];
 
   return (
