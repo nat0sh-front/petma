@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
 import styles from './Header.module.scss';
 
@@ -8,7 +9,8 @@ import notification from '../../assets/icons/notification.svg';
 import avatar from '../../assets/images/avatar.png';
 import arrowDown from '../../assets/icons/arrow-down.svg';
 import logoutIcon from '../../assets/icons/logout.svg';
-import { AuthContext } from '../../context/AuthContext';
+import settingsIcon from "../../assets/icons/settings.svg";
+
 
 const Header = () => {
     const navigate = useNavigate();
@@ -63,9 +65,13 @@ const Header = () => {
                             </button>
                             {isOpen && (
                                 <div className={styles.dropdownContent}>
-                                    <button className={styles.logoutButton} onClick={handleLogout}>
-                                        <img className={styles.logoutIcon} src={logoutIcon} alt="" />
-                                        <span className={styles.logout}>Выйти</span>
+                                    <button className={styles.dropdownButton}>
+                                        <img className={styles.dropdownIcon} src={settingsIcon} alt="" />
+                                        <span className={styles.dropdownText}>Настройки</span>
+                                    </button>
+                                    <button className={styles.dropdownButton} onClick={handleLogout}>
+                                        <img className={styles.dropdownIcon} src={logoutIcon} alt="" />
+                                        <span className={styles.dropdownText}>Выйти</span>
                                     </button>
                                 </div>
                             )}

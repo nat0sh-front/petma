@@ -96,7 +96,9 @@
                     top: 45px;
                     z-index: 100;
                     width: 100%;
-                    height: 40px;
+                    height: 80px;
+                    display: flex;
+                    flex-direction: column;
                     background-color: $white;
                     border-radius: 5px;
                     box-shadow: 
@@ -105,35 +107,36 @@
                         // -4px 0 8px rgba(0, 0, 0, 0.1), /* Левая тень */
                         // 0 -4px 8px rgba(0, 0, 0, 0.1); /* Верхняя тень */
 
-                    .logoutButton {
+                    .dropdownButton {
                         border: none;
-                        background-color: transparent;
+                        background-color: $white;
                         cursor: pointer;
                         color: $text-color;
                         font-family: inherit;
-                        font-size: 20px;
-                        font-weight: 500;
+                        font-size: 1.1rem;
+                        font-weight: 400;
                         display: flex;
                         align-items: center;
-                        gap: 15px;
+                        justify-content: flex-start;
+                        gap: 20px;
                         padding: 10px;
                         width: 100%;
                         height: 100%;
                         transition: all 0.3s ease;
-                        border-radius: 10px;
 
                         &:hover {
                             background-color: $light-grey;
                         }
 
-                        .logoutIcon {
+                        .dropdownIcon {
                             width: 20px;
                             height: 20px;
                         }
 
-                        .logout {
-                            color: $text-color;
-                            font-size: 1rem;
+                        .dropdownText {
+                            text-align: center;
+                            font-size: 0.9rem;
+                            font-weight: 500;
                         }
                     }
                 }
