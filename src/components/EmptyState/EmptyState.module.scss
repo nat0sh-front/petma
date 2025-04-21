@@ -6,9 +6,16 @@
     align-items: center;
     grid-column: 3 span;
     padding: 50px 0;
+    background-color: $white;
+    display: flex;
+    justify-content: center; 
+    height: 100%;         
+    text-align: center; 
+    
 
     .message {
         font-size: 1.1rem;
         color: $grey;
+        text-align: center;
     }
 }

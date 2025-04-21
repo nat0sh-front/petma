@@ -29,31 +29,19 @@
         }
     }
 
-    .addButton {
-        border-radius: 50%;
+    .subButton {
+        border: 1px solid $primary-color;
+        border-radius: 5px;
         background-color: transparent;
-        border: none;
+        color: $primary-color;
+        font-family: $font-family;
+        font-size: 0.7rem;
+        padding: 5px;
         cursor: pointer;
-        width: 30px;
-        height: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-sizing: border-box;
         transition: all 0.3s ease;
 
         &:hover {
-            .addIcon {
-                color: $primary-color;
-           
-            }
-        }
-
-        .addIcon {
-            width: 15px;
-            height: 15px;
-            color: $text-color;
-            transition: all 0.3s ease;
+            background-color: $secondary-color;
         }
     }
 }
