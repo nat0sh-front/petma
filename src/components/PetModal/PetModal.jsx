@@ -78,6 +78,7 @@ const PetModal = ({ isOpen, onClose, onPetAdded, editablePet }) => {
         const petAge = calculateAge(petBirthday);
 
         const payload = {
+            id: String(Date.now()),
             ownerId: user.id,
             image: petImage,
             name: petName,

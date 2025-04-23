@@ -39,6 +39,7 @@ const AddPostModal = ({ isOpen, onClose, onPostAdded }) => {
             const postTime = formatDate(new Date().toISOString());
 
             const response = await axios.post('http://localhost:5000/posts', {
+                id: String(Date.now()),
                 authorId: user.id,
                 image: postImage, // Изображение
                 text: postText, // Текст поста

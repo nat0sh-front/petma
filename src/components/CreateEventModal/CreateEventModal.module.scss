@@ -1,0 +1,136 @@
+@use '../../App.scss' as *;
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+
+    .modalContent {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        position: relative;
+        min-width: 300px;
+        max-width: 800px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .modalHeader {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+
+            h2 {
+                font-size: 1.5rem;
+            }
+    
+            .closeButton {
+                margin: 0;
+                padding: 0;
+                border: none;
+                background: none;
+                font-size: 30px;
+                cursor: pointer;
+                color: $text-color;
+            }
+    
+        }
+
+        .form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 20px;
+            align-items: center;
+        
+
+            .eventImage {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                .eventImageWrapper {
+                    aspect-ratio: 1/1;
+                    overflow: hidden;
+                    position: relative;
+
+                    .preview {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        display: block;
+                    }
+                }
+
+                .fileInput {
+                    height: 45px;
+                }
+            } 
+
+            .eventInfo {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                .eventInputs {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 10px;
+                }
+
+                input, textarea, select {
+                    padding: 5px 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    font-family: inherit;
+                } 
+
+                textarea {
+                    min-height: 100px;
+                    resize: none;
+                }
+    
+                .inputWrapper {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                }
+            }
+
+            .submitButton {
+                padding: 10px;
+                border: none;
+                background: $primary-color;
+                color: $text-color;
+                cursor: pointer;
+                border-radius: 10px;
+                font-size: inherit;
+                width: 100%;
+                align-self: end;
+                grid-column: span 2;
+
+                &:hover {
+                    background-color: $secondary-color;
+                    outline: 1px solid $primary-color;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+

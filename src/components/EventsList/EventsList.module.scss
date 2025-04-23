@@ -5,7 +5,84 @@
     background-color: $white;
     border-radius: 10px;
     padding: 20px;
-    display: grid;
-    grid-template-rows: min-content auto;
+    display: flex;
+    flex-direction: column;
     gap: 20px;
+
+    .eventsHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $white;
+        width: 100%;
+        
+        .eventFilters {
+            display: flex;
+            gap: 20px;
+        }
+    
+        button {
+            background: none;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            padding: 10px;
+            cursor: pointer;
+        }
+    
+        .allEventsButton, .myEventsButton {
+            border: 1px solid $grey;
+
+            &.active {
+                background-color: $secondary-color;
+                border: 1px solid $primary-color;
+
+            }
+        }
+    
+        .cityFilter {
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid $grey;
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    
+        .createEventButton {
+            background-color: transparent;
+            border: none;
+            outline: 1px solid $grey;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            justify-self: flex-end;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background-color: $secondary-color;
+                outline: 1px solid $primary-color;
+            }
+    
+            .plusIcon {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+
+    .eventGroup {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .groupTitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: $text-color;
+        }
+    }
 }
