@@ -1,11 +1,11 @@
 import React from 'react'
 import styles from './EventsLayout.module.scss'
-import EventsList from '../../components/EventsList/EventsList'
+import Events from '../../components/EventsList/Events'
 
 const EventsLayout = () => {
   return (
     <div className={styles.eventsLayout}>
-      <EventsList />  
+        <Events />
     </div>
   )
 }
