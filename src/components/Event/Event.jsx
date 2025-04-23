@@ -5,6 +5,7 @@ import location from '../../assets/icons/location.svg'
 import menu from '../../assets/icons/menu.svg'
 import { AuthContext } from '../../context/AuthContext'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 const Event = ({ event, organizer }) => {
   const { user } = useContext(AuthContext);
@@ -84,12 +85,21 @@ const Event = ({ event, organizer }) => {
         </div>
         <p className={styles.eventDescription}>{event.description}</p>
         <div className={styles.eventActions}>
-          <p className={styles.eventOrganizer}>Организатор: {organizer?.name} {organizer?.surname}</p>
+          <p className={styles.eventOrganizer}>
+            Организатор: 
+            <Link className={styles.linkProfile} to={`/profile/${organizer?.id}`}>
+              {organizer?.name} {organizer?.surname}
+            </Link>
+            
+          </p>
           {
             !isOrganizer && (
-              <button className={styles.joinButton} onClick={handleParticipation}>
-                {isParticipating ? 'Отменить участие' : 'Участвовать'}
-              </button>
+            <button
+              className={`${styles.joinButton} ${isParticipating ? styles.joined : ''}`}
+              onClick={handleParticipation}
+            >
+              {isParticipating ? 'Отменить участие' : 'Участвовать'}
+            </button>
             )
           }
         </div>

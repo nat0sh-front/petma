@@ -119,6 +119,15 @@
 
             .eventOrganizer {
                 color: $grey;
+
+                .linkProfile {
+                    color: $grey;
+                    margin-left: 5px;
+
+                    &:hover {
+                        color: $primary-color;
+                    }
+                }
             }
 
             .joinButton {
@@ -131,10 +140,11 @@
                 font-weight: 500;
                 padding: 10px 20px;
                 cursor: pointer;
-                transition: all 0.3s ease;
 
-                &:hover {
+                &.joined {
                     background-color: $secondary-color;
+                    border: 1px solid $primary-color;
+                    color: $text-color;
                 }
             }
         }
