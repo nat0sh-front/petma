@@ -49,6 +49,7 @@ const AddPostModal = ({ isOpen, onClose, onPostAdded }) => {
                 comments: [], // Комментарии (пустой массив)
             });
             console.log('Пост добавлен:', response.data);
+            setPostImage("");           
             onPostAdded();
             onClose(); 
         } catch (error) {
@@ -72,12 +73,12 @@ const AddPostModal = ({ isOpen, onClose, onPostAdded }) => {
                             className={styles.preview} 
                         />
                     </div>
-                    <input className={styles.fileInput} type="file" name="postImage" accept="image/*" onChange={handleImageUpload} />
+                    <input className={styles.fileInput} type="file" name="postImage" accept="image/*" required onChange={handleImageUpload} />
                 </div>
                 <div className={styles.postInfo}>
                     <div className={styles.postText}>
                         <span className={styles.label}>Подпись:</span>
-                        <textarea name="postText" maxLength="200" onChange={(e) => setPostText(e.target.value)} />
+                        <textarea name="postText" maxLength="200" required onChange={(e) => setPostText(e.target.value)} />
                     </div>
                     <div className={styles.postLocation}>
                         <span className={styles.label}>Место:</span>

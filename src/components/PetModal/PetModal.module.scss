@@ -55,10 +55,12 @@
                 .avatarContent {
                     display: flex;
                     align-items: center;
+                    justify-content: space-between;
                     gap: 10px;
 
                     .fileInput {
                         height: 45px;
+                        width: 50%;
                     }
 
                     .preview {
@@ -92,9 +94,6 @@
                 padding: 10px;
                 border: 1px solid #ccc;
                 border-radius: 5px;
-            }
-
-            select {
                 width: 50%;
             }
 

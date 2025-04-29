@@ -51,9 +51,8 @@
         }
     
         .createEventButton {
-            background-color: transparent;
+            background-color: $primary-color;
             border: none;
-            outline: 1px solid $grey;
             display: flex;
             align-items: center;
             justify-content: center;

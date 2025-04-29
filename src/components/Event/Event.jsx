@@ -7,7 +7,7 @@ import { AuthContext } from '../../context/AuthContext'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
-const Event = ({ event, organizer }) => {
+const Event = ({ event, organizer, onParticipationChange }) => {
   const { user } = useContext(AuthContext);
 
   const [participants, setParticipants] = useState(event.participants || []);
@@ -24,6 +24,7 @@ const Event = ({ event, organizer }) => {
         try {
             await axios.delete(`http://localhost:5000/events/${id}`);
             console.log("Событие удалено");
+            onParticipationChange();
         } catch (error) {
             console.error('Ошибка при удалении события:', error);
         }
@@ -44,6 +45,7 @@ const Event = ({ event, organizer }) => {
         participants: updatedParticipants,
       });
       setParticipants(updatedParticipants);
+      onParticipationChange();
       console.log(isParticipating);
     } catch (error) {
       console.error("Ошибка при обновлении участия:", error);

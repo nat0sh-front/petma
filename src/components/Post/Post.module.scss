@@ -56,8 +56,8 @@
             .postButtonItem {
                 display: flex;
                 gap: 10px;
+                cursor: pointer;
                 
-    
                 .postIcon {
                     color: $text-color;
                     width: 15px;

@@ -101,7 +101,7 @@ const EventsList = () => {
         <h3 className={styles.groupTitle}>Организатор</h3>
         {getMyOrganizedEvents().map(event => {
           const organizer = users.find(u => u.id === event.organizerId);
-          return <Event key={event.id} event={event} organizer={organizer} />;
+          return <Event key={event.id} event={event} organizer={organizer} onParticipationChange={fetchEvents} />;
         })}
       </div>
     )}
@@ -111,23 +111,28 @@ const EventsList = () => {
         <h3 className={styles.groupTitle}>Участник</h3>
         {getMyParticipatedEvents().map(event => {
           const organizer = users.find(u => u.id === event.organizerId);
-          return <Event key={event.id} event={event} organizer={organizer} />;
+          return <Event key={event.id} event={event} organizer={organizer} onParticipationChange={fetchEvents} />;
         })}
       </div>
     )}
 
     {getMyOrganizedEvents().length === 0 && getMyParticipatedEvents().length === 0 && (
-      <EmptyState message="Вы пока не участвуете в событиях" />
+      <EmptyState message="Ничего не найдено по выбранным фильтрам" />
     )}
   </>
-) : (
-  getFilteredEvents().map(event => {
-    const organizer = users.find(u => u.id === event.organizerId);
-    return <Event key={event.id} event={event} organizer={organizer} />;
-  })
-)}
+  ) : (
+    getFilteredEvents().length > 0 ? (
+      getFilteredEvents().map(event => {
+        const organizer = users.find(u => u.id === event.organizerId);
+        return <Event key={event.id} event={event} organizer={organizer} onParticipationChange={fetchEvents} />;
+      })
+    ) : (
+      <EmptyState message="Ничего не найдено по выбранным фильтрам" />
+    )
+  )}
+
     </div>
-    <CreateEventModal isOpen={isOpenCreateEventModal} onClose={() => setIsOpenCreateEventModal(false)} />
+    <CreateEventModal isOpen={isOpenCreateEventModal} onClose={() => setIsOpenCreateEventModal(false)} onEventCreated={fetchEvents} />
     </>
   )
 }

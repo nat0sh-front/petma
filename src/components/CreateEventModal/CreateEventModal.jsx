@@ -4,7 +4,7 @@ import defaultBackground from '../../assets/images/background.jpg';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 
-const CreateEventModal = ({ isOpen, onClose }) => {
+const CreateEventModal = ({ isOpen, onClose, onEventCreated }) => {
     const { user } = useContext(AuthContext);
     const [eventImage, setEventImage] = useState("");
     const [eventTitle, setEventTitle] = useState("");
@@ -50,12 +50,14 @@ const CreateEventModal = ({ isOpen, onClose }) => {
                 title: eventTitle, // 
                 date: eventDate, // Дата события
                 time: eventTime, // Время события
+                city: eventCity, // Город
                 location: eventLocation, // Местоположение
                 description: eventDescription, // Описание события
                 participants: [], // Участники (пустой массив, если нет участников)
             });
             console.log('Событие добавлено:', response.data);
             onClose(); 
+            onEventCreated();
         } catch (error) {
             console.error('Ошибка при добавлении события:', error);
         }

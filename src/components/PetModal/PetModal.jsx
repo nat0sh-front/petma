@@ -11,7 +11,7 @@ const PetModal = ({ isOpen, onClose, onPetAdded, editablePet }) => {
     const [petType, setPetType] = useState("");
     const [petBreed, setPetBreed] = useState("");
     const [petGender, setPetGender] = useState("");
-    const [petBirthday, setPetBirthday] = useState(0);
+    const [petBirthday, setPetBirthday] = useState("");
     const [petBio, setPetBio] = useState("");
 
     useEffect(() => {
@@ -48,17 +48,19 @@ const PetModal = ({ isOpen, onClose, onPetAdded, editablePet }) => {
     }
 
     function calculateAge(birthday) {
-        const [day, month, year] = birthday.split('.');
-        const birthDate = new Date(year, month - 1, day);
-        let currentDate = new Date();
+        if (!birthday) return "";
+    
+        const birthDate = new Date(birthday);
+        const currentDate = new Date();
+    
         let age = currentDate.getFullYear() - birthDate.getFullYear();
         const monthDiff = currentDate.getMonth() - birthDate.getMonth();
         const dayDiff = currentDate.getDate() - birthDate.getDate();
-      
+    
         if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-          age--;
+            age--;
         }
-
+    
         const getYearDeclension = (years) => {
             if (years % 10 === 1 && years % 100 !== 11) {
                 return "год";
@@ -68,9 +70,10 @@ const PetModal = ({ isOpen, onClose, onPetAdded, editablePet }) => {
                 return "лет";
             }
         };
-
+    
         return `${age} ${getYearDeclension(age)}`;
-    };
+    }
+    
 
     const handlePetSubmit = async (e) => {
         e.preventDefault();
@@ -140,11 +143,11 @@ const PetModal = ({ isOpen, onClose, onPetAdded, editablePet }) => {
                 </div>
                 <div className={styles.name}>
                     <span className={styles.label}>Кличка:</span>
-                    <input type="text" name="petName" value={petName} onChange={(e) => setPetName(e.target.value)}/>
+                    <input type="text" name="petName" value={petName} required onChange={(e) => setPetName(e.target.value)}/>
                 </div>
                 <div className={styles.type}>
                     <span className={styles.label}>Тип питомца:</span>
-                    <select id="type" name="type" value={petType} onChange={(e) => setPetType(e.target.value)}>
+                    <select id="type" name="type" value={petType} required onChange={(e) => setPetType(e.target.value)}>
                         <option value="">Выберите тип</option>
                         <option value="Собака">Собака</option>
                         <option value="Кошка">Кошка</option>
@@ -168,7 +171,7 @@ const PetModal = ({ isOpen, onClose, onPetAdded, editablePet }) => {
                 </div>
                 <div className={styles.birthday}>
                     <span className={styles.label}>День рождения:</span>
-                    <input type="text" name="petBirthday" value={petBirthday} placeholder='ДД.ММ.ГГГГ' onChange={(e) => setPetBirthday(e.target.value)} />
+                    <input type="date" name="petBirthday" value={petBirthday} placeholder='ДД.ММ.ГГГГ' onChange={(e) => setPetBirthday(e.target.value)} />
                 </div>
                 <div className={styles.bio}>
                     <span className={styles.label}>О питомце:</span>
