@@ -4,7 +4,7 @@ import defaultAvatar from '../../assets/images/avatar.png'
 import editIcon from '../../assets/icons/edit.svg'
 import PetModal from '../PetModal/PetModal'
 
-const Pet = ({ pet, handlePetAdded }) => {
+const Pet = ({ pet, handlePetAdded, isOwnProfile }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleEditClick = () => {
@@ -22,9 +22,10 @@ const Pet = ({ pet, handlePetAdded }) => {
         <div className={styles.petInfo}>
           <div className={styles.petHeader}>
             <span className={styles.petName}>{pet.name}</span>
-            <button className={styles.petEditButton} onClick={handleEditClick}>
+            {isOwnProfile && 
+            (<button className={styles.petEditButton} onClick={handleEditClick}>
               <img className={styles.petEditIcon} src={editIcon} alt="Edit" />
-            </button>
+            </button>)}
           </div>
           <div className={styles.petTags}>
             <span className={styles.petType}>{pet.type}</span>

@@ -1,13 +1,13 @@
 import React from 'react'
 import styles from './HomeLayout.module.scss'
 import Feed from '../../components/Feed/Feed'
-import Recomendations from '../../components/Recomendations/Recomendations'
+import RecomendationList from '../../components/RecomendationList/RecomendationList'
 
 const HomeLayout = () => {
   return (
     <div className={styles.homeLayout}>
         <Feed />
-        <Recomendations />
+        <RecomendationList />
     </div>
   )
 }
