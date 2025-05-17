@@ -1,11 +1,11 @@
 import React from 'react'
 import styles from './ServicesLayout.module.scss'
-import EmptyState from '../../components/EmptyState/EmptyState'
+import Services from '../../components/Services/Services'
 
 const ServicesLayout = () => {
   return (
     <div className={styles.servicesLayout}>
-        <EmptyState message={"Услуги находятся в разработке"} />
+      <Services />
     </div>
   )
 }

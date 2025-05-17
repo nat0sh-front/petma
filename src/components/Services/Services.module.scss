@@ -1,0 +1,36 @@
+@use "../../App.scss" as *;
+
+.services {
+    background-color: $white;
+    border-radius: 20px;
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .servicesHeader {
+        display: flex;
+        gap: 20px;
+
+        .typeFilter, .cityFilter {
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid $grey;
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    }
+
+    .servicesContent {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+
+        .servicesMap {
+            border-radius: 20px;
+            overflow: hidden;
+        }
+    }
+}
