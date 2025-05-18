@@ -26,7 +26,9 @@ const Services = () => {
       </div>
       <div className={styles.servicesContent}>
         <div className={styles.servicesList}>
-          <ServiceCard />
+          <ServiceCard type='premium' />
+          <ServiceCard type='medium' />
+          <ServiceCard type='basic' />
         </div>
         <div className={styles.servicesMap}>
           <ServiceMap />
