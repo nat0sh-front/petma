@@ -6,7 +6,7 @@ import StarRating from '../StarRating/StarRating'
 import crown from '../../assets/icons/crown.svg'
 import pet from '../../assets/icons/pet.svg'
 
-const ServiceCard = ({ type }) => {
+const ServiceCard = ({ serviceCard, type }) => {
 
   return (
     <div className={`${styles.card} ${
@@ -21,10 +21,10 @@ const ServiceCard = ({ type }) => {
           <img className={styles.image} src={defaultAvatar} alt="avatar" />
         </div>
         <div className={styles.cardTitle}>
-          <h3 className={styles.title}>ZooMarket.kz</h3>
+          <h3 className={styles.title}>{serviceCard.name}</h3>
           <span className={styles.rating}>
-            <StarRating rating={4.5} />
-            <span className={styles.ratingValue}>4.5</span>
+            <StarRating rating={serviceCard.rating} />
+            <span className={styles.ratingValue}>{serviceCard.rating.toFixed(1)}</span>
           </span>
         </div>
         {type === 'premium' ? (
@@ -48,7 +48,7 @@ const ServiceCard = ({ type }) => {
       <div className={styles.cardContent}>
         <div className={styles.location}>
           <img className={styles.locationIcon} src={location} alt="location" />
-          <span className={styles.locationText}>ул.Сатпаева 63</span>
+          <span className={styles.locationText}>{serviceCard.address}</span>
           {type !== 'basic' && (
             <>
                 <span className={styles.dot}>·</span>
@@ -59,14 +59,20 @@ const ServiceCard = ({ type }) => {
         {type === 'premium' && (
           <div className={styles.description}>
             <p className={styles.descriptionText}>
-              Мы предлагаем широкий ассортимент товаров для домашних животных, включая корма, игрушки и аксессуары.
+              {serviceCard.description}
             </p>
           </div>
         )}
       </div>
       <div className={styles.cardFooter}>
         <div className={styles.tags}>
-          <span className={styles.tag}>Зоомагазин</span>
+          {serviceCard.tags.map((tag, index)=> {
+            return (
+              <span key={index} className={styles.tag}>
+                {tag}
+              </span>
+            )
+          })}
         </div>
         {type !== 'basic' && (
           <button className={styles.button}>Подробнее</button>
