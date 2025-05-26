@@ -23,7 +23,7 @@ npm install
 Запустите `json-server` командой:
 
 ```bash
-npx json-server --watch db.json --port 5000
+npm run server
 ```
 
 ---
