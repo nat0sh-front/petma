@@ -1,42 +1,48 @@
 @use "../../App.scss" as *;
 
 .services {
-    background-color: $white;
-    border-radius: 20px;
-    padding: 20px;
+  background-color: $white;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: calc(100vh - 82.67px);
+  overflow: hidden;
+
+  .servicesHeader {
     display: flex;
-    flex-direction: column;
     gap: 20px;
 
-    .servicesHeader {
-        display: flex;
-        gap: 20px;
+    .typeFilter,
+    .cityFilter {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid $grey;
+      font-family: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  }
 
-        .typeFilter, .cityFilter {
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid $grey;
-            font-family: inherit;
-            font-size: 1rem;
-            cursor: pointer;
-        }
+  .servicesContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    flex-grow: 1;
+    min-height: 0; // 🔥 ключевая строчка!
+    
+    .servicesList {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      overflow-y: auto;
+      min-height: 0; // 🔥 тоже важна!
     }
 
-    .servicesContent {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-
-        .servicesList {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            overflow-y: auto;
-        }
-
-        .servicesMap {
-            border-radius: 20px;
-            overflow: hidden;
-        }
+    .servicesMap {
+      overflow: hidden;
+      height: 100%;
     }
+  }
 }

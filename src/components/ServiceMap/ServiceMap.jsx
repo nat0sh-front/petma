@@ -1,49 +1,81 @@
-import React, { useEffect } from 'react'
-import styles from './ServiceMap.module.scss'
+import React, { useEffect, useRef } from 'react';
+import styles from './ServiceMap.module.scss';
 
-const ServiceMap = () => {
+const ServiceMap = ({ serviceCards, selectedServiceId, onSelect, center }) => {
+  const mapRef = useRef(null);
+  const placemarksRef = useRef([]);
+  const mapContainerRef = useRef(null);
+
+  // Инициализация карты один раз
   useEffect(() => {
-    if (window.ymaps) {
-      window.ymaps.ready(init);
-    }
+    if (!window.ymaps) return;
 
-    function init() {
-      const map = new window.ymaps.Map("map", {
-        center: [43.238949, 76.889709], // Алматы
-        zoom: 12,
-      });
-
-      const points = [
-        {
-          coords: [43.2385, 76.8898],
-          name: "Пушистик",
-          address: "ул. Айманова, 12",
-        },
-        {
-          coords: [43.2402, 76.9001],
-          name: "КотоСпа",
-          address: "ул. Сатпаева, 5",
-        },
-        {
-          coords: [43.2356, 76.8951],
-          name: "Лапки+",
-          address: "пр. Абая, 45",
-        },
-      ];
-
-      points.forEach((point) => {
-        const placemark = new window.ymaps.Placemark(point.coords, {
-          balloonContent: `<strong>${point.name}</strong><br/>${point.address}`,
+    window.ymaps.ready(() => {
+      if (!mapRef.current) {
+        mapRef.current = new window.ymaps.Map(mapContainerRef.current, {
+          center: [center.lat, center.lng], // Стартуем с центра из пропсов
+          zoom: 12, // Нормальный зум для города
+          controls: ['zoomControl'],
         });
-        map.geoObjects.add(placemark);
-      });
-    }
+      }
+    });
   }, []);
 
-  return (
-  <div id="map" className={styles.serviceMap}>
+  // Следим за изменением центра и меняем позицию карты
+  useEffect(() => {
+    if (!mapRef.current || !center) return;
 
-  </div>
-)}
+    mapRef.current.setCenter([center.lat, center.lng], 12, { duration: 500 }); 
+  }, [center]);
 
-export default ServiceMap
+  // Рендерим метки
+  useEffect(() => {
+    if (!mapRef.current) return;
+
+    // Удаляем старые метки
+    placemarksRef.current.forEach(pm => mapRef.current.geoObjects.remove(pm));
+    placemarksRef.current = [];
+
+    // Добавляем новые метки
+    serviceCards.forEach(service => {
+      if (!service.location) return;
+
+      const placemark = new window.ymaps.Placemark(
+        [service.location.lat, service.location.lng],
+        {},
+        { preset: 'islands#blueIcon' }
+      );
+
+      placemark.serviceId = service.id;
+
+      placemark.events.add('click', () => {
+        if (onSelect) onSelect(service.id);
+      });
+
+      mapRef.current.geoObjects.add(placemark);
+      placemarksRef.current.push(placemark);
+    });
+  }, [serviceCards, onSelect]);
+
+  // Выделяем выбранную метку
+  useEffect(() => {
+    if (!mapRef.current || !placemarksRef.current.length) return;
+
+    // Снимаем выделение со всех
+    placemarksRef.current.forEach(pm => pm.options.set('preset', 'islands#blueIcon'));
+
+    // Подсвечиваем выбранную
+    if (selectedServiceId) {
+      const placemark = placemarksRef.current.find(pm => pm.serviceId === selectedServiceId);
+      if (placemark) {
+        placemark.options.set('preset', 'islands#greenIcon');
+        const coords = placemark.geometry.getCoordinates();
+        mapRef.current.setCenter(coords, 14, { duration: 300 });
+      }
+    }
+  }, [selectedServiceId]);
+
+  return <div ref={mapContainerRef} id="map" className={styles.serviceMap}></div>;
+};
+
+export default ServiceMap;
