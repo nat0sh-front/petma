@@ -2,48 +2,44 @@ import { useEffect, useState } from "react";
 import styles from "./ChatList.module.scss";
 import ChatPreview from "../ChatPreview/ChatPreview";
 import axios from "axios";
+import EmptyState from "../EmptyState/EmptyState";
 
 const ChatList = ({ currentUserId, selectedChatId, onSelectChat }) => {
   const [chats, setChats] = useState([]);
 
   useEffect(() => {
+    if (!currentUserId) return;
+
     const fetchChats = async () => {
       try {
-        const userChatsRes = await axios.get(
-          `http://localhost:5000/chatUsers?userId=${currentUserId}`
-        );
-        const chatIds = userChatsRes.data.map((item) => item.chatId);
+        const { data: allChats } = await axios.get("http://localhost:5000/chats");
 
-        const chatsData = await Promise.all(
-          chatIds.map(async (chatId) => {
-            const chatUsersRes = await axios.get(
-              `http://localhost:5000/chatUsers?chatId=${chatId}`
-            );
-            const usersInChat = chatUsersRes.data;
-
-            const otherUserEntry = usersInChat.find(
-              (u) => +u.userId !== +currentUserId
-            );
-            if (!otherUserEntry) return null;
-
-            const otherUserRes = await axios.get(
-              `http://localhost:5000/users/${otherUserEntry.userId}`
-            );
-
-            const res = await axios.get(`http://localhost:5000/messages?chatId=${chatId}`);
-            const sortedMessages = res.data.sort((a, b) => Number(b.id) - Number(a.id));
-            const lastMessage = sortedMessages[0]?.text || 'Нет сообщений';
-
-            return {
-              chatId,
-              otherUser: otherUserRes.data,
-              lastMessage,
-            };
-          })
+        const userChats = allChats.filter(chat =>
+          chat.participants.includes(currentUserId)
         );
 
-        const filteredChats = chatsData.filter((chat) => chat !== null);
-        setChats(filteredChats);
+        const chatPromises = userChats.map(async (chat) => {
+          const otherUserId = chat.participants.find(id => id !== currentUserId);
+
+          const [userRes, messagesRes] = await Promise.all([
+            axios.get(`http://localhost:5000/users/${otherUserId}`),
+            axios.get(`http://localhost:5000/messages?chatId=${chat.id}`)
+          ]);
+
+          const messages = messagesRes.data;
+          const lastMessage = messages.length > 0
+            ? messages.sort((a, b) => new Date(b.time) - new Date(a.time))[0].text
+            : "Нет сообщений";
+
+          return {
+            chatId: chat.id,
+            otherUser: userRes.data,
+            lastMessage
+          };
+        });
+
+        const results = await Promise.all(chatPromises);
+        setChats(results);
       } catch (error) {
         console.error("Ошибка при загрузке чатов:", error);
         setChats([]);
@@ -53,9 +49,10 @@ const ChatList = ({ currentUserId, selectedChatId, onSelectChat }) => {
     fetchChats();
   }, [currentUserId]);
 
-  return (
-    <div className={styles.chatList}>
-      {chats.map((chat) => (
+return (
+  <div className={styles.chatList}>
+    {chats.length > 0 ? (
+      chats.map((chat) => (
         <ChatPreview
           key={chat.chatId}
           otherUser={chat.otherUser}
@@ -63,9 +60,13 @@ const ChatList = ({ currentUserId, selectedChatId, onSelectChat }) => {
           isSelected={chat.chatId === selectedChatId}
           onClick={() => onSelectChat(chat.chatId)}
         />
-      ))}
-    </div>
-  );
+      ))
+    ) : (
+      <EmptyState message="Пока что у вас нет чатов. Напишите первому другу!" />
+    )}
+  </div>
+);
+
 };
 
 export default ChatList;

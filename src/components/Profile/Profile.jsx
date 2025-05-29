@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 
 import styles from './Profile.module.scss';
@@ -18,6 +18,7 @@ import PetModal from '../PetModal/PetModal';
 const Profile = () => {
   const { user } = useContext(AuthContext);
   const { id: profileId } = useParams();
+  const navigate = useNavigate();
 
   const [profileUser, setProfileUser] = useState(null);
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
@@ -166,6 +167,29 @@ const Profile = () => {
 
   if (!profileUser) return <div>Загрузка профиля...</div>;
 
+const handleMessageClick = async () => {
+  try {
+    const res = await axios.get(`http://localhost:5000/chats?participants_like=${user.id}`);
+    const chats = res.data;
+
+    const existingChat = chats.find(chat =>
+      chat.participants.includes(user.id) && chat.participants.includes(profileUser.id)
+    );
+
+    if (existingChat) {
+      navigate(`/chat/${existingChat.id}`);
+    } else {
+      const createRes = await axios.post('http://localhost:5000/chats', {
+        participants: [user.id, profileUser.id]
+      });
+
+      navigate(`/chat/${createRes.data.id}`);
+    }
+  } catch (error) {
+    console.error('Ошибка при переходе в чат:', error);
+  }
+};
+
   return (
     <div className={styles.profile}>
       <header className={styles.header}>
@@ -203,7 +227,7 @@ const Profile = () => {
             </>
         ) : (
             <>
-            <button className={styles.addPostButton}>
+            <button className={styles.addPostButton} onClick={handleMessageClick}>
                 <img className={styles.addIcon} src={chatIcon} alt="Message" />
                 <span className={styles.addPostButtonText}>Написать</span>
             </button>

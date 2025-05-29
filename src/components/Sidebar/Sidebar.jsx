@@ -12,8 +12,8 @@ import zootaxi from "../../assets/icons/zootaxi.svg";
 import settings from "../../assets/icons/settings.svg";
 
 const Sidebar = () => {
-  const navigate = useNavigate(); 
-  const location = useLocation(); 
+  const navigate = useNavigate();
+  const location = useLocation();
   const userId = JSON.parse(localStorage.getItem("userId"));
 
   const menuItems = [
@@ -22,7 +22,7 @@ const Sidebar = () => {
     { path: "/chat", icon: chat, label: "Чат" },
     { path: "/events", icon: events, label: "События" },
     { path: "/services", icon: service, label: "Услуги" },
-    { path: "/zootaxi", icon: zootaxi, label: "ZooТакси" }
+    { path: "/zootaxi", icon: zootaxi, label: "ZooТакси" },
   ];
 
   return (
@@ -33,9 +33,22 @@ const Sidebar = () => {
           {menuItems.map((item) => (
             <li
               key={item.path}
-              className={`${styles.navItem} ${location.pathname === item.path ? styles.active : ""}`}>
-              <button className={styles.navButton} onClick={() => navigate(item.path)}>
-                <img className={styles.navIcon} src={item.icon} alt={item.label} />
+              className={`${styles.navItem} ${
+                location.pathname === item.path ||
+                location.pathname.startsWith(item.path + "/")
+                  ? styles.active
+                  : ""
+              }`}
+            >
+              <button
+                className={styles.navButton}
+                onClick={() => navigate(item.path)}
+              >
+                <img
+                  className={styles.navIcon}
+                  src={item.icon}
+                  alt={item.label}
+                />
                 <span className={styles.navLabel}>{item.label}</span>
               </button>
             </li>
