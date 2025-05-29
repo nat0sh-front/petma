@@ -1,0 +1,11 @@
+@use "../../App.scss" as *;
+
+.chatList {
+    grid-column: 1/2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-right: 1px solid $grey;
+    padding: 10px;
+}

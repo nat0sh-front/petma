@@ -1,0 +1,33 @@
+@use "../../App.scss" as *;
+
+.messageInput {
+    display: flex;
+    border-top: 1px solid $grey;
+    padding: 10px;
+
+    .input {
+        width: 100%;
+        border: none;
+        padding: 5px 10px;
+        font-size: 0.9rem;
+        background: transparent;
+
+        &:focus, &:focus-visible {
+            outline: none;
+        }
+    }
+
+    .sendButton {
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 0.9rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:focus, &:focus-visible {
+            outline: none;
+        }
+    }
+}

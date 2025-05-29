@@ -19,12 +19,6 @@ const Services = () => {
   const [mapCenter, setMapCenter] = useState(cityCenters['алматы']);
 
   useEffect(() => {
-  const cities = serviceCards.map(s => s.city).filter(Boolean);
-  const uniqueCities = Array.from(new Set(cities));
-  console.log('Уникальные города:', uniqueCities);
-}, [serviceCards]);
-
-  useEffect(() => {
     fetchServiceCards();
   }, []);
 
