@@ -22,7 +22,7 @@ const Sidebar = () => {
     { path: "/chat", icon: chat, label: "Чат" },
     { path: "/events", icon: events, label: "События" },
     { path: "/services", icon: service, label: "Услуги" },
-    { path: "/zootaxi", icon: zootaxi, label: "ZooТакси" },
+    { path: "/zootaxi/new", icon: zootaxi, label: "ZooТакси" },
   ];
 
   return (
@@ -35,7 +35,8 @@ const Sidebar = () => {
               key={item.path}
               className={`${styles.navItem} ${
                 location.pathname === item.path ||
-                location.pathname.startsWith(item.path + "/")
+                location.pathname.startsWith(item.path + "/") ||
+                (item.path.startsWith("/zootaxi") && location.pathname.startsWith("/zootaxi"))
                   ? styles.active
                   : ""
               }`}

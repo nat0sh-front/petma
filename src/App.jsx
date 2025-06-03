@@ -25,7 +25,9 @@ const App = () => {
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/chat/:id" element={<ChatPage />} /> 
           <Route path="/services" element={<ServicesPage />} />
-          <Route path="/zootaxi" element={<ZootaxiPage />} />
+          <Route path="/zootaxi/new" element={<ZootaxiPage />} />
+          <Route path="/zootaxi/history" element={<ZootaxiPage />} />
+          <Route path="/zootaxi/rules" element={<ZootaxiPage />} />
         </Routes>
       </Router>
   )
