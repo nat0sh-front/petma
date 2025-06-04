@@ -1,20 +1,22 @@
-import React, { useEffect, useRef } from 'react';
-import styles from './ServiceCard.module.scss';
-import defaultAvatar from '../../assets/images/avatar.png';
-import location from '../../assets/icons/location.svg';
-import StarRating from '../StarRating/StarRating';
-import crown from '../../assets/icons/crown.svg';
-import pet from '../../assets/icons/pet.svg';
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./ServiceCard.module.scss";
+import defaultAvatar from "../../assets/images/avatar.png";
+import location from "../../assets/icons/location.svg";
+import StarRating from "../StarRating/StarRating";
+import crown from "../../assets/icons/crown.svg";
+import pet from "../../assets/icons/pet.svg";
+import ServiceModal from "../ServiceModal/ServiceModal";
 
 const ServiceCard = ({ serviceCard, type, onSelect, isSelected }) => {
   const cardRef = useRef(null);
+  const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
 
   useEffect(() => {
     if (isSelected && cardRef.current) {
       cardRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-        inline: 'nearest',
+        behavior: "smooth",
+        block: "center",
+        inline: "nearest",
       });
     }
   }, [isSelected]);
@@ -25,31 +27,33 @@ const ServiceCard = ({ serviceCard, type, onSelect, isSelected }) => {
       className={`
         ${styles.card} 
         ${
-          type === 'premium'
+          type === "premium"
             ? styles.cardPremium
-            : type === 'medium'
+            : type === "medium"
             ? styles.cardMedium
             : styles.cardBasic
         } 
-        ${isSelected ? styles.highlight : ''}
+        ${isSelected ? styles.highlight : ""}
       `}
       id={`card-${serviceCard.id}`}
       onClick={onSelect}
     >
       <div className={styles.cardHeader}>
-        <div className={styles.cardImage}>
-          <img className={styles.image} src={defaultAvatar} alt="avatar" />
-        </div>
         <div className={styles.cardTitle}>
-          <h3 className={styles.title}>{serviceCard.name}</h3>
-          <span className={styles.rating}>
-            <StarRating rating={serviceCard.rating} />
-            <span className={styles.ratingValue}>
-              {serviceCard.rating.toFixed(1)}
+          <div className={styles.cardImage}>
+            <img className={styles.image} src={defaultAvatar} alt="avatar" />
+          </div>
+          <div className={styles.title}>
+            <h3 className={styles.name}>{serviceCard.name}</h3>
+            <span className={styles.rating}>
+              <StarRating rating={serviceCard.rating} />
+              <span className={styles.ratingValue}>
+                {serviceCard.rating.toFixed(1)}
+              </span>
             </span>
-          </span>
+          </div>
         </div>
-        {type === 'premium' ? (
+        {type === "premium" ? (
           <img
             width={32}
             height={32}
@@ -57,7 +61,7 @@ const ServiceCard = ({ serviceCard, type, onSelect, isSelected }) => {
             src={crown}
             alt="crown"
           />
-        ) : type === 'medium' ? (
+        ) : type === "medium" ? (
           <img
             width={32}
             height={32}
@@ -73,7 +77,7 @@ const ServiceCard = ({ serviceCard, type, onSelect, isSelected }) => {
           <img className={styles.locationIcon} src={location} alt="location" />
           <span className={styles.locationText}>{serviceCard.address}</span>
         </div>
-        {type === 'premium' && (
+        {type === "premium" && (
           <div className={styles.description}>
             <p className={styles.descriptionText}>{serviceCard.description}</p>
           </div>
@@ -88,10 +92,22 @@ const ServiceCard = ({ serviceCard, type, onSelect, isSelected }) => {
             </span>
           ))}
         </div>
-        {type !== 'basic' && (
-          <button className={styles.button}>Подробнее</button>
+        {type !== "basic" && (
+          <button
+            className={styles.button}
+            onClick={() => setIsServiceModalOpen(true)}
+          >
+            Подробнее
+          </button>
         )}
       </div>
+
+      <ServiceModal
+        serviceCard={serviceCard}
+        type={type}
+        isOpen={isServiceModalOpen}
+        onClose={() => setIsServiceModalOpen(false)}
+      />
     </div>
   );
 };

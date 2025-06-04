@@ -30,14 +30,14 @@
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     flex-grow: 1;
-    min-height: 0; // 🔥 ключевая строчка!
+    min-height: 0; 
     
     .servicesList {
       display: flex;
       flex-direction: column;
       gap: 20px;
       overflow-y: auto;
-      min-height: 0; // 🔥 тоже важна!
+      min-height: 0; 
     }
 
     .servicesMap {

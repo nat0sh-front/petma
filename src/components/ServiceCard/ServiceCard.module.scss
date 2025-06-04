@@ -28,10 +28,17 @@
     }
 
         .cardTitle {
+            display: flex;
+            gap: 5px;
             
             .title {
-                font-size: 1.2rem;
-                font-weight: 500;
+                
+
+                .name {
+                    font-size: 1.2rem;
+                    font-weight: 500;
+                    margin-left: 5px;
+                }
             }
 
             .rating {
@@ -74,8 +81,12 @@
             align-items: center;
             gap: 10px;
 
-            .dot {
-                font-size: 2rem;
+            .locationIcon {
+                margin-left: -10px;
+            }
+
+            .locationText {
+                margin-left: -10px;
             }
         }
 
