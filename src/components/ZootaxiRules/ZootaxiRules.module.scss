@@ -1,0 +1,58 @@
+@use "../../App.scss" as *;
+
+.container {
+  padding: 24px;
+  color: $text-color;
+  font-family: $font-family;
+  line-height: 1.6;
+  background-color: $white;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  max-width: 960px;
+  margin: 0 auto;
+  transition: background-color 0.3s ease;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  text-align: center;
+  padding-left: 16px;
+}
+
+.section {
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba($primary-color, 0.15);
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.list {
+  padding-left: 20px;
+  list-style: none;
+}
+
+.listItem {
+  position: relative;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  transition: color 0.3s ease;
+
+  &::before {
+    content: '✔';
+    position: absolute;
+    left: 0;
+    top: 2px;
+    color: $primary-color;
+    font-size: 14px;
+  }
+}

@@ -8,7 +8,7 @@ const ZootaxiEndScreen = ({ onFinish }) => {
             Мы надеемся, что ваш опыт был приятным.<br /> Если у вас есть вопросы или предложения, пожалуйста, свяжитесь с нашей службой поддержки.
         </p>
         <button className={styles.button} onClick={onFinish}>
-            Начать заново
+            Вернуться на главную
         </button>
     </div>
   )

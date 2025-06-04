@@ -404,18 +404,6 @@
   ],
   "rides": [
     {
-      "id": "1748941378485",
-      "petId": "1745925898475",
-      "phone": "+77787012704",
-      "from": "ул. Брусиловского 249",
-      "to": "ул. Манаса 34/1",
-      "distance": "",
-      "price": "",
-      "datetime": "2025-05-27T14:03",
-      "comment": "",
-      "status": "pending"
-    },
-    {
       "id": "1748941493492",
       "petId": "1745925898475",
       "phone": "+7787012704",
@@ -425,8 +413,59 @@
       "price": 2383,
       "datetime": "2025-06-04T14:05",
       "comment": "",
-      "ownerId": "1745925162581",
-      "status": "pending"
+      "ownerId": "1745925162581"
+    }
+  ],
+"drivers": [
+    {
+      "id": 1,
+      "name": "Нуржан Тулегенов",
+      "experience": "7 лет за рулем",
+      "carModel": "Toyota Camry",
+      "carColor": "Черный",
+      "licensePlate": "987ABC02",
+      "phone": "87012223344",
+      "avatar": "/images/nurzhan.png"
+    },
+    {
+      "id": 2,
+      "name": "Айгуль Сатпаева",
+      "experience": "Ответственный водитель",
+      "carModel": "Hyundai Sonata",
+      "carColor": "Синий",
+      "licensePlate": "123KZK05",
+      "phone": "87018887766",
+      "avatar": "/images/aigul.png"
+    },
+    {
+      "id": 3,
+      "name": "Ермек Касымов",
+      "experience": "Опыт работы 10 лет",
+      "carModel": "Kia Sorento",
+      "carColor": "Белый",
+      "licensePlate": "456QWE01",
+      "phone": "87015554433",
+      "avatar": "/images/ermek.png"
+    },
+    {
+      "id": 4,
+      "name": "Жанна Асанова",
+      "experience": "Дружелюбный водитель",
+      "carModel": "Chevrolet Malibu",
+      "carColor": "Серый",
+      "licensePlate": "111XYZ07",
+      "phone": "87779991122",
+      "avatar": "/images/zhan.png"
+    },
+    {
+      "id": 5,
+      "name": "Мадияр Алдабергенов",
+      "experience": "Безаварийный стаж — 6 лет",
+      "carModel": "Nissan Teana",
+      "carColor": "Красный",
+      "licensePlate": "999AAA13",
+      "phone": "87014445566",
+      "avatar": "/images/madiyar.png"
     }
   ]
 }

@@ -1,101 +1,70 @@
 @use "../../App.scss" as *;
 
-.card {
-    width: 100%;
-    padding: 10px;
-    border-radius: 20px;
+.orderCard {
+    display: flex;
+    flex-direction: column;
     border: 1px solid $grey;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    border-radius: 10px;
+    padding: 10px;
 
-
-    .driverInfo {
-        position: relative;
+    .header {
         display: flex;
-        flex-direction: column;
         gap: 10px;
+        align-items: center;
+        justify-content: space-between;
 
-        .header {
+        .headerContent {
             display: flex;
-            align-items: center;
             gap: 10px;
+            align-items: center;
 
-            .avatar {
-                width: 60px;
-                height: 60px;
+            .zootaxiIcon {
+                width: 50px;
+                height: 50px;
                 border-radius: 50%;
+                background-color: $light-grey;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 10px;
+            }
+
+
+            .datetime {
+                font-size: 0.9rem;
+                color: $grey;
             }
         }
 
-        .details {
-            padding-left: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
 
-            .title {
-                font-size: 1.1rem;
-            }
+    }
+
+    .footer {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        justify-content: space-between;
+
+        .fromTo {
+            margin-left: 10px;
         }
 
-        .phoneButton {
+        .button {
+            padding: 10px;
             border: none;
             background-color: $primary-color;
+            color: $text-color;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: inherit;
             display: flex;
             align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            position: absolute;
-            bottom: 0;
-            right: 20px;
-            cursor: pointer;
-
-            .phoneIcon {
-                margin-top: 4px;
-            }
+            gap: 5px;
 
             &:hover {
                 background-color: $secondary-color;
                 outline: 1px solid $primary-color;
-            }
-        }
-    }
-
-    .orderInfo {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        position: relative;
-
-        .title {
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .price {
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        .cancelButton {
-            border: none;
-            background-color: $light-grey;
-            color: $text-color;
-            padding: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.8rem;
-            transition: all 0.1s ease;
-            position: absolute;
-            bottom: 0;
-            right: 0;
-
-            &:hover {
-                outline: 1px solid $grey;
             }
         }
     }
@@ -104,9 +73,4 @@
 .title {
     font-size: 1.2rem;
     font-weight: 500;
-}
-
-.subtitle {
-    font-size: 0.9rem;
-    color: $grey;
 }

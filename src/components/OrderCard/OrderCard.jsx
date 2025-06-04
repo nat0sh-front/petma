@@ -1,47 +1,44 @@
 import styles from "./OrderCard.module.scss";
-import defaultAvatar from "../../assets/images/avatar.png";
-import phone from "../../assets/icons/phone.svg";
+import zootaxi from '../../assets/icons/zootaxi.svg';
+import phone from '../../assets/icons/phone.svg';
 
-const OrderCard = ({ order, distance, price, onCancel }) => {
+const OrderCard = ({ order }) => {
+function formatFullDateTime(datetimeString) {
+  const date = new Date(datetimeString);
+
+  const day = String(date.getDate()).padStart(2, "0");
+
+  const months = [
+    "января", "февраля", "марта", "апреля", "мая", "июня",
+    "июля", "августа", "сентября", "октября", "ноября", "декабря"
+  ];
+  const monthName = months[date.getMonth()];
+
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+
+  return `${day} ${monthName} ${year}, ${hours}:${minutes}`;
+}
+
+
   return (
-    <div className={styles.card}>
-      <div className={styles.driverInfo}>
-        <div className={styles.header}>
-          <img
-            className={styles.avatar}
-            src={defaultAvatar}
-            alt="Аватарка водителя"
-          />
-          <div className={styles.driver}>
-            <h3 className={styles.title}>Андрей Лисов</h3>
-            <p className={styles.subtitle}>Опытный перевозчик</p>
+    <div className={styles.orderCard}>
+      <div className={styles.header}>
+        <div className={styles.headerContent}>
+          <img className={styles.zootaxiIcon} src={zootaxi} alt="" />
+          <div className={styles.titleWrapper}>
+            <h3 className={styles.title}>Заказ №{order.id}</h3>
+            <p className={styles.datetime}>{formatFullDateTime(order.datetime)}</p>
           </div>
         </div>
-        <div className={styles.details}>
-          <div className={styles.car}>
-            <p className={styles.title}>Toyota Camry</p>
-            <p className={styles.subtitle}>Чёрный</p>
-          </div>
-          <p className={styles.title}>283BRB12</p>
-        </div>
-        <button className={styles.phoneButton}>
-          <a href="tel:87787012704" className={styles.phoneLink}>
-            <img
-              className={styles.phoneIcon}
-              src={phone}
-              alt="Иконка телефона"
-            />
-          </a>
-        </button>
+        <p className={styles.title}>{order.price} ₸</p>
       </div>
-      <div className={styles.orderInfo}>
-        <p className={styles.subtitle}>Откуда:</p>
-        <p className={styles.title}>{order.from}</p>
-        <p className={styles.subtitle}>Куда:</p>
-        <p className={styles.title}>{order.to}</p>
-        <p className={styles.subtitle} style={{marginTop:'10px'}}>Цена:</p>
-        <p className={styles.price}>{price} тг</p>
-        <button className={styles.cancelButton} onClick={onCancel}>Отменить заказ</button>    
+      <div className={styles.footer}>
+        <p className={styles.fromTo}>{order.from} → {order.to}</p>
+        <button className={styles.button}>
+          <p className={styles.buttonText}>Поддержка</p>
+        </button>
       </div>
     </div>
   );

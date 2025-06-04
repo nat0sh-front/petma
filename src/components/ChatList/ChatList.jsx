@@ -10,41 +10,44 @@ const ChatList = ({ currentUserId, selectedChatId, onSelectChat }) => {
   useEffect(() => {
     if (!currentUserId) return;
 
-    const fetchChats = async () => {
-      try {
-        const { data: allChats } = await axios.get("http://localhost:5000/chats");
+const fetchChats = async () => {
+  try {
+    const { data: allChats } = await axios.get("http://localhost:5000/chats");
 
-        const userChats = allChats.filter(chat =>
-          chat.participants.includes(currentUserId)
-        );
+    const userChats = allChats.filter(chat =>
+      chat.participants.includes(currentUserId)
+    );
 
-        const chatPromises = userChats.map(async (chat) => {
-          const otherUserId = chat.participants.find(id => id !== currentUserId);
+    const chatPromises = userChats.map(async (chat) => {
+      const otherUserId = chat.participants.find(id => id !== currentUserId);
 
-          const [userRes, messagesRes] = await Promise.all([
-            axios.get(`http://localhost:5000/users/${otherUserId}`),
-            axios.get(`http://localhost:5000/messages?chatId=${chat.id}`)
-          ]);
+      const [userRes, messagesRes] = await Promise.all([
+        axios.get(`http://localhost:5000/users/${otherUserId}`),
+        axios.get(`http://localhost:5000/messages?chatId=${chat.id}`)
+      ]);
 
-          const messages = messagesRes.data;
-          const lastMessage = messages.length > 0
-            ? messages.sort((a, b) => new Date(b.time) - new Date(a.time))[0].text
-            : "Нет сообщений";
+      const messages = messagesRes.data;
+      if (messages.length === 0) return null; // Пропускаем чаты без сообщений
 
-          return {
-            chatId: chat.id,
-            otherUser: userRes.data,
-            lastMessage
-          };
-        });
+      const lastMessage = messages
+        .sort((a, b) => new Date(b.time) - new Date(a.time))[0].text;
 
-        const results = await Promise.all(chatPromises);
-        setChats(results);
-      } catch (error) {
-        console.error("Ошибка при загрузке чатов:", error);
-        setChats([]);
-      }
-    };
+      return {
+        chatId: chat.id,
+        otherUser: userRes.data,
+        lastMessage
+      };
+    });
+
+    const results = await Promise.all(chatPromises);
+    const filteredResults = results.filter(chat => chat !== null); // Убираем null
+
+    setChats(filteredResults);
+  } catch (error) {
+    console.error("Ошибка при загрузке чатов:", error);
+    setChats([]);
+  }
+};
 
     fetchChats();
   }, [currentUserId]);

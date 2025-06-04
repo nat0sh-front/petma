@@ -18,8 +18,7 @@ const ZootaxiForm = ({ onNext }) => {
     price: '',
     datetime: '',
     comment: '',
-    ownerId: userId,
-    status: 'pending'
+    ownerId: userId
   });
 
   useEffect(() => {
