@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 import styles from './Profile.module.scss';
 
@@ -33,6 +35,8 @@ const Profile = () => {
   const isOwnProfile = user?.id === profileId;
 
   const [isFollowingProfileUser, setIsFollowingProfileUser] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const checkIfFollowing = async (currentUserId, targetUserId) => {
     try {
@@ -125,10 +129,16 @@ const Profile = () => {
   };
 
     useEffect(() => {
-    if (profileId) {
-        fetchProfileUser();
-    }
-    }, [profileId]);
+  if (profileId) {
+    setIsLoading(true);
+    fetchProfileUser().finally(() => {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1500); // Задержка в 1.5 секунды
+    });
+  }
+}, [profileId]);
+
 
     useEffect(() => {
     if (profileUser?.id) {
@@ -136,7 +146,7 @@ const Profile = () => {
         fetchPets(profileUser.id);
         fetchSubscriptions(profileUser.id);
 
-        // Только если это чужой профиль
+        // только если чужой профиль
         if (!isOwnProfile && user?.id) {
         checkIfFollowing(user.id, profileUser.id);
         }
@@ -190,88 +200,145 @@ const handleMessageClick = async () => {
   }
 };
 
-  return (
-    <div className={styles.profile}>
-      <header className={styles.header}>
-        <img className={styles.avatar} src={profileUser.avatar || defaultAvatar} alt="Avatar" />
-        <div className={styles.info}>
-          <div className={styles.nameContainer}>
-            <span className={styles.name}>
-              {profileUser.name || 'Гость'} {profileUser.surname || ''}
-            </span>
-          </div>
-          <div className={styles.countContainer}>
-            <span className={styles.petCount}>{petCountText}</span>
-            <span className={styles.followingCount}>{followingCountText}</span>
-            <span className={styles.followerCount}>{followerCountText}</span>
-          </div>
-          <div className={styles.bioContainer}>
-            <span className={styles.bio}>
-              {profileUser.bio ? profileUser.bio : 'Расскажите о себе...'}
-            </span>
-          </div>
+const renderSkeleton = () => (
+  <div style={{ maxWidth: 750}}>
+    {/* Header */}
+    <div style={{ display: 'flex', alignItems: 'center', marginBottom: 16 }}>
+      <Skeleton circle width={100} height={100} />
+      <div style={{ marginLeft: 32 }}>
+        <Skeleton width={160} height={20} />
+        <Skeleton width={120} height={20} style={{ marginTop: 8 }} />
+      </div>
+      <Skeleton width={100} height={20} style={{ marginLeft: 40 }} />
+      <Skeleton width={100} height={20} style={{ marginLeft: 10 }} />
+      <Skeleton width={100} height={20} style={{ marginLeft: 10 }} />
+    </div>
+
+    {/* Bio */}
+    <Skeleton width={240} height={14} style={{ marginBottom: 20 }} />
+
+    {/* Buttons */}
+    <div style={{ display: 'flex', gap: 10, marginBottom: 24 }}>
+      <Skeleton width={350} height={40} />
+      <Skeleton width={350} height={40} />
+    </div>
+
+    {/* Pet section */}
+    <Skeleton width={100} height={16} style={{ marginBottom: 12 }} />
+    <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: 24 }}>
+      <Skeleton circle width={48} height={48} />
+      <div style={{ marginLeft: 16, flex: 1 }}>
+        <Skeleton width={100} height={14} style={{ marginBottom: 8 }} />
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 8 }}>
+          <Skeleton width={60} height={20} />
+          <Skeleton width={60} height={20} />
+          <Skeleton width={60} height={20} />
         </div>
-      </header>
+        <Skeleton width={220} height={12} />
+        <Skeleton width={180} height={12} style={{ marginTop: 4 }} />
+      </div>
+    </div>
+
+    {/* Publications */}
+    <Skeleton width={100} height={16} style={{ marginBottom: 12 }} />
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, 230px)', gap: 10 }}>
+      {Array(3).fill(0).map((_, idx) => (
+        <Skeleton key={idx} height={230} style={{ borderRadius: 8 }} />
+      ))}
+    </div>
+  </div>
+);
+
+return (
+  <div className={styles.profile}>
+    {isLoading ? (
+      <div className={styles.profile}>
+        {renderSkeleton()}
+      </div>
+    ) : (
+      <>
+        <header className={styles.header}>
+          <img className={styles.avatar} src={profileUser?.avatar || defaultAvatar} alt="Avatar" />
+          <div className={styles.info}>
+            <div className={styles.nameContainer}>
+              <span className={styles.name}>
+                {profileUser?.name || 'Гость'} {profileUser?.surname || ''}
+              </span>
+            </div>
+            <div className={styles.countContainer}>
+              <span className={styles.petCount}>{petCountText}</span>
+              <span className={styles.followingCount}>{followingCountText}</span>
+              <span className={styles.followerCount}>{followerCountText}</span>
+            </div>
+            <div className={styles.bioContainer}>
+              <span className={styles.bio}>
+                {profileUser?.bio || 'Расскажите о себе...'}
+              </span>
+            </div>
+          </div>
+        </header>
 
         <div className={styles.profileButtons}>
-        {isOwnProfile ? (
+          {isOwnProfile ? (
             <>
-            <button className={styles.addPostButton} onClick={() => setIsAddPostModalOpen(true)}>
+              <button className={styles.addPostButton} onClick={() => setIsAddPostModalOpen(true)}>
                 <img className={styles.addIcon} src={addIcon} alt="Add Publication" />
                 <span className={styles.addPostButtonText}>Опубликовать</span>
-            </button>
-            <button className={styles.editButton} onClick={() => setIsEditProfileModalOpen(true)}>
+              </button>
+              <button className={styles.editButton} onClick={() => setIsEditProfileModalOpen(true)}>
                 <img className={styles.editIcon} src={editIcon} alt="Edit Profile" />
                 <span className={styles.editButtonText}>Редактировать</span>
-            </button>
+              </button>
             </>
-        ) : (
+          ) : (
             <>
-            <button className={styles.addPostButton} onClick={handleMessageClick}>
+              <button className={styles.addPostButton} onClick={handleMessageClick}>
                 <img className={styles.addIcon} src={chatIcon} alt="Message" />
                 <span className={styles.addPostButtonText}>Написать</span>
-            </button>
-            <button
+              </button>
+              <button
                 className={styles.editButton}
                 onClick={isFollowingProfileUser ? handleUnsubscribe : handleSubscribe}
-            >
+              >
                 <span className={styles.editButtonText}>
-                {isFollowingProfileUser ? 'Отписаться' : 'Подписаться'}
+                  {isFollowingProfileUser ? 'Отписаться' : 'Подписаться'}
                 </span>
-            </button>
+              </button>
             </>
-        )}
+          )}
         </div>
 
-      <PetList
-        pets={pets}
-        handlePetAdded={handlePetAdded}
-        onAddPetClick={() => setIsAddPetModalOpen(true)}
-        isOwnProfile={isOwnProfile}
-      />
-      <PostPreviewList posts={posts} handlePostAdded={handlePostAdded} />
+        <PetList
+          pets={pets}
+          handlePetAdded={handlePetAdded}
+          onAddPetClick={() => setIsAddPetModalOpen(true)}
+          isOwnProfile={isOwnProfile}
+        />
+        <PostPreviewList posts={posts} handlePostAdded={handlePostAdded} />
 
-      {isOwnProfile && (
-        <>
-          <PetModal
-            isOpen={isAddPetModalOpen}
-            onClose={() => setIsAddPetModalOpen(false)}
-            onPetAdded={handlePetAdded}
-            editablePet={null}
-          />
-          <AddPostModal
-            isOpen={isAddPostModalOpen}
-            onClose={() => setIsAddPostModalOpen(false)}
-            onPostAdded={handlePostAdded}
-          />
-          <EditProfileModal
-            isOpen={isEditProfileModalOpen}
-            onClose={() => setIsEditProfileModalOpen(false)}
-          />
-        </>
-      )}
-    </div>
-  );
-};
+        {isOwnProfile && (
+          <>
+            <PetModal
+              isOpen={isAddPetModalOpen}
+              onClose={() => setIsAddPetModalOpen(false)}
+              onPetAdded={handlePetAdded}
+              editablePet={null}
+            />
+            <AddPostModal
+              isOpen={isAddPostModalOpen}
+              onClose={() => setIsAddPostModalOpen(false)}
+              onPostAdded={handlePostAdded}
+            />
+            <EditProfileModal
+              isOpen={isEditProfileModalOpen}
+              onClose={() => setIsEditProfileModalOpen(false)}
+            />
+          </>
+        )}
+      </>
+    )}
+  </div>
+);
+}
 
 export default Profile;
