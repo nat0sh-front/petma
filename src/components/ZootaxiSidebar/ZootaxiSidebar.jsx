@@ -7,8 +7,8 @@ const ZootaxiSidebar = () => {
   const userId = JSON.parse(localStorage.getItem("userId"));
 
 const menuItems = [
-  { path: "/zootaxi/new", label: "Новый заказ" },
-  { path: "/zootaxi/history", label: "История заказов" },
+  { path: "/zootaxi/new", label: "Новая заявка" },
+  { path: "/zootaxi/history", label: "Мои заявки" },
   { path: "/zootaxi/rules", label: "Правила перевозок" }
 ];
 

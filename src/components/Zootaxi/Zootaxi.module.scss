@@ -6,5 +6,45 @@
     padding: 20px;
     background-color: $white;
     border-radius: 20px;
-    
+
+    .successMessage {
+        text-align: center;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 70vh;
+
+        .title {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .button {
+            padding: 10px;
+            border: none;
+            background: $primary-color;
+            color: $text-color;
+            cursor: pointer;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: inherit;
+
+            &:hover {
+                background-color: $secondary-color;
+                outline: 1px solid $primary-color;
+            }
+        }
+    }
+
 }

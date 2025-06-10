@@ -3,7 +3,7 @@ import styles from './ZootaxiForm.module.scss';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 
-const ZootaxiForm = ({ onNext }) => {
+const ZootaxiForm = ({ onSuccess }) => {
   const { user } = useContext(AuthContext);
   const userId = user?.id;
 
@@ -14,8 +14,6 @@ const ZootaxiForm = ({ onNext }) => {
     phone: '',
     from: '',
     to: '',
-    distance: '',
-    price: '',
     datetime: '',
     comment: '',
     ownerId: userId
@@ -50,8 +48,7 @@ const handleSubmit = async (e) => {
     const response = await axios.post('http://localhost:5000/rides', {
       ...formData,
     });
-
-    onNext(formData);
+    onSuccess();
     console.log(formData) // переходим к компоненту ожидания, передаём rideId
   } catch (error) {
     console.error('Ошибка при создании заявки:', error);
@@ -146,7 +143,7 @@ const handleSubmit = async (e) => {
       </div>
 
       <button type="submit" className={styles.submitButton}>
-        Заказать зоотакси
+        Оставить заявку
       </button>
     </form>
   );
