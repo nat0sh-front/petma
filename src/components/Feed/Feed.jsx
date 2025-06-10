@@ -47,7 +47,7 @@ const Feed = () => {
 
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
             <Skeleton width={20} height={20} style={{ borderRadius: '50%' }} />
-            <Skeleton width={20} height={20} style={{ borderRadius: '50%', marginLeft: 10 }} />
+            <Skeleton width={20} height={20} style={{ borderRadius: '50%', marginLeft: 10, marginRight: 10 }} />
             <Skeleton width={80} height={12} style={{ marginLeft: 'auto' }} />
           </div>
 
