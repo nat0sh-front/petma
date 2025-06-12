@@ -27,11 +27,8 @@ const ChatList = ({ currentUserId, selectedChatId, onSelectChat }) => {
             axios.get(`http://localhost:5000/messages?chatId=${chat.id}`)
           ]);
 
-          const messages = messagesRes.data;
-          if (messages.length === 0) return null;
-
-          const lastMessage = messages
-            .sort((a, b) => new Date(b.time) - new Date(a.time))[0].text;
+          const lastMessage = messagesRes.data
+            .sort((a, b) => new Date(b.time) - new Date(a.time))[0]?.text || "Нет сообщений";
 
           return {
             chatId: chat.id,
@@ -41,10 +38,9 @@ const ChatList = ({ currentUserId, selectedChatId, onSelectChat }) => {
         });
 
         const results = await Promise.all(chatPromises);
-        const filteredResults = results.filter(chat => chat !== null);
 
         setTimeout(() => {
-          setChats(filteredResults);
+          setChats(results);
           setIsLoading(false);
         }, 1500);
       } catch (error) {

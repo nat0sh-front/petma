@@ -6,6 +6,19 @@ const ServiceMap = ({ serviceCards, selectedServiceId, onSelect, center }) => {
   const placemarksRef = useRef([]);
   const mapContainerRef = useRef(null);
 
+useEffect(() => {
+  if (!window.ymaps || !mapRef.current) return;
+
+  const testPlacemark = new window.ymaps.Placemark(
+    [43.235377, 76.896718], // Алматы, ул. Сатпаева 63
+    { balloonContent: 'Тестовая метка' },
+    { preset: 'islands#redIcon' }
+  );
+
+  mapRef.current.geoObjects.add(testPlacemark);
+}, []);
+
+
   // Инициализация карты один раз
   useEffect(() => {
     if (!window.ymaps) return;

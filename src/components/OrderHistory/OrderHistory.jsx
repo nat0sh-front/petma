@@ -10,7 +10,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 const OrderHistory = () => {
   const { user } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true); // NEW
+  const [loading, setLoading] = useState(true); 
 
   const userId = user?.id;
 
@@ -22,8 +22,7 @@ const OrderHistory = () => {
         const response = await axios.get(`http://localhost:5000/rides`, {
           params: { ownerId: userId }
         });
-
-        // задержка 1.5 секунды
+        
         setTimeout(() => {
           setOrders(response.data);
           setLoading(false);
@@ -74,7 +73,7 @@ const OrderHistory = () => {
       ) : orders.length > 0 ? (
         orders.map((order) => <OrderCard key={order.id} order={order} />)
       ) : (
-        <EmptyState message="У вас пока нет заказов" />
+        <EmptyState message="У вас пока нет заявок" />
       )}
     </div>
   );

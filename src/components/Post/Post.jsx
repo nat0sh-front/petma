@@ -39,7 +39,7 @@ const Post = ({ post, user, onUpdatePost }) => {
         <div className={styles.postAuthor}>
           <Link className={styles.linkProfile} to={`/profile/${user?.id}`}>
             <span className={styles.name}>{user?.name} {user?.surname}</span>
-            <span className={styles.username}>{post.location}</span>
+            <span className={styles.username}>{post.location?.trim() ? post.location : user?.username}</span>
           </Link>
         </div>
       </div>

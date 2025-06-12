@@ -31,7 +31,7 @@ const Header = () => {
         <div className={styles.header}>
             <nav className={styles.nav}>
                 <ul className={styles.navList}>
-                    <div className={styles.navButtons}>
+                    {/* <div className={styles.navButtons}>
                         <li className={styles.navItem}>
                             <button className={styles.navButton}>
                                 <img className={styles.navIcon} src={search} alt="" />
@@ -42,7 +42,7 @@ const Header = () => {
                                 <img className={styles.navIcon} src={notification} alt="" />
                             </button>
                         </li>
-                    </div>
+                    </div> */}
                     <li className={styles.navItem}>
                         <div className={styles.dropdown}>
                             <button
